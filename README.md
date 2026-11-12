@@ -1,4 +1,4 @@
-# FastVideo Bridge
+# FastVideo WHIP Bridge
 
 **Website und Beschreibung der Bridge: [fastvideo.ch](https://fastvideo.ch/)**
 
