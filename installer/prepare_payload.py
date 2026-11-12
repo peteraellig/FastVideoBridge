@@ -32,7 +32,7 @@ if args.lean:
         (stage/extra).unlink(missing_ok=True)
 else:
     (stage/'documents').mkdir()
-    for name in ('BRIDGE-README.md','requirements.lock.txt','requirements.txt','NDI-OUTPUT.txt'):
+    for name in ('requirements.lock.txt','requirements.txt'):
         shutil.copy2(ROOT/'documents'/name,stage/'documents'/name)
 # No source discovery history, selected source, passwords, tokens, user lists or logs.
 settings=json.loads((ROOT/'fastvideo.settings.json').read_text(encoding='utf-8'))

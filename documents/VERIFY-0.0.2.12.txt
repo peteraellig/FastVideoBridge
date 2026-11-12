@@ -1,9 +1,0 @@
-FastVideo Bridge 0.0.2.12 - 2026-10-08
-Receiver source rate is estimated from all decoded frame timestamps, including frames later discarded to bound latency. Queue discards no longer turn a 50p source into a 25p OMT format.
-Video and audio queue drops are reported separately, with queue high-water marks and bounded timing samples for output, native OMT send, colour conversion and lock waits.
-Receiver diagnostics JSONL is written every five seconds, rotated at 1 MB with two backups. It includes RTP packet loss and jitter, without tokens.
-An authenticated GET on the receiver's existing /api/whip-input/status endpoint exposes telemetry to the existing stream-key holder; unauthenticated requests return 401.
-Tests passed: queue skips retain p50 and independent drop counters; H264/AV1 WHIP reconnection into OMT with stereo audio; diagnostics authentication.
-Local 720p50 OMT output benchmark: about 1.85 ms average, 2.31 ms p95, 12.14 ms max over 100 high-detail frames. This local result does not establish performance on .102.
-Sender live snapshot: about 50 fps, encoder p95 below 7 ms, no publisher error or gateway video queue losses.
-Actual .102 bottleneck remains to be measured after its receiver update.

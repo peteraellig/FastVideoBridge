@@ -1,6 +1,0 @@
-FastVideo Bridge 0.0.2.13 - 2026-10-08
-Measured receiver .102 before fix: zero video/audio RTP packet loss, zero audio queue drops, increasing video queue drops. OMT output average 27.2 ms / p95 32.2 ms; conversion average 22.9 ms / p95 27.6 ms; native send average 2.7 ms / p95 3.1 ms; lock wait negligible.
-Replaced per-frame automatic-thread colour conversion with a retained VideoReformatter and threads=1, preserving UYVY OMT format and high encoding quality.
-Fixed UTF-8 mojibake in receiver UI and corrected split video/audio drop-counter rendering.
-Three regression/integration tests passed: queue skip cadence remains 50p, authenticated diagnostics access, H264/AV1 decode to native OMT stereo audio and reconnect.
-Source and local .104 files updated. Receiver .102 requires its local Update-Bridge helper or Setup before the performance comparison can run.

@@ -25,19 +25,18 @@ https://www.python.org/ftp/python/3.12.10/python-3.12.10-embed-amd64.zip
 Save it as installer/tools/python-3.12.10-embed-amd64.zip.
 After building the gateway and creating the settings file above, run:
 
-  .\installer\Build-BridgeInstaller.ps1 -PythonExe "$PWD\.venv\Scripts\python.exe"
+  .\installer\Build-BridgeInstaller.ps1 -Lean -PythonExe "$PWD\.venv\Scripts\python.exe"
 
 The installer build includes its required payload/installation verifier.
 This verifier installs into a temporary folder and starts that temporary copy.
 The application test suites and gateway load generator are not included.
 
 Export contents:
-- Application sources, UI assets, documentation and dependency licenses.
+- Application sources, UI assets, build instructions and dependency licenses.
 - OMT runtime libraries (required native dependencies, not generated app output).
 - No original Git history, personal settings, work data, logs or test suites.
 - The prebuilt installer is in dist locally and published as a GitHub Release asset.
 - installer/tools downloads are intentionally excluded from Git.
-- Historical documents retain original developer paths and test reports; use
-  the commands in this file for building this exported tree.
+- documents/ contains only requirements.txt and requirements.lock.txt.
 
 This export has not been compiled or runtime-tested on the export machine.
