@@ -56,7 +56,7 @@ Do not overwrite an existing personal configuration. See [BUILD.txt](BUILD.txt) 
 - [Build instructions](BUILD.txt)
 - [Python dependencies](documents/requirements.txt) and [pinned versions](documents/requirements.lock.txt)
 
-The documents directory contains only the dependency lists needed to build the application. Development notes, test reports, test suites, runtime logs, personal settings and working data are excluded from this source export.
+The documents directory contains only the dependency lists needed to build the application.
 
 ## License
 
