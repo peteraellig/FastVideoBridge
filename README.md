@@ -12,6 +12,7 @@ FastVideo Bridge is a standalone live-video sender and receiver for Windows. It 
 
 - OMT, NDI and Blackmagic SDI video inputs and outputs.
 - WHIP sending with H.264, H.265* or AV1* video and Opus audio. (*AV1 or H.265 may not be supported, depending on the graphics card used)
+- Two audio tracks are transmitted. You can specify which two of the eight audio tracks are included in the setup. (1&2,3&4,5&6,7&8,1-8)
 - SRT sending in caller mode with H.264/H.265* video and AAC audio.
 - WHIP reception
 - Playback of FastVideo links through WHEP.
