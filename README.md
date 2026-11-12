@@ -1,39 +1,39 @@
 # FastVideo WHIP Bridge
 
-**Website und Beschreibung der Bridge: [fastvideo.ch](https://fastvideo.ch/)**
+**Website and Bridge overview: [fastvideo.ch](https://fastvideo.ch/)**
 
-FastVideo Bridge ist ein eigenständiger Sender und Empfänger für Live-Video unter Windows. Die Bridge verbindet OMT, NDI und Blackmagic SDI mit WHIP, WHEP und SRT und wird über eine lokale Weboberfläche bedient.
+FastVideo Bridge is a standalone live-video sender and receiver for Windows. It connects OMT, NDI and Blackmagic SDI with WHIP, WHEP and SRT, controlled through a local web interface.
 
-**[Windows-Installer herunterladen (Version 0.0.5.14)](https://github.com/peteraellig/FastVideoBridge/releases/download/v0.0.5.14/FastVideoBridge-Setup-0.0.5.14.exe)** · [Alle Releases](https://github.com/peteraellig/FastVideoBridge/releases)
+**[Download the Windows installer (version 0.0.5.14)](https://github.com/peteraellig/FastVideoBridge/releases/download/v0.0.5.14/FastVideoBridge-Setup-0.0.5.14.exe)** · [All releases](https://github.com/peteraellig/FastVideoBridge/releases)
 
-![FastVideo Bridge – Sender und Empfänger mit Live-Vorschau](images/fastvideobridge-screenshot.png)
+![FastVideo Bridge – sender and receiver with live previews](images/fastvideobridge-screenshot.png)
 
-## Funktionen
+## Features
 
-- OMT-, NDI- und Blackmagic-SDI-Quellen als Videoeingang.
-- WHIP-Sender mit H.264, H.265 oder AV1 und Opus-Audio.
-- SRT-Sender im Caller-Modus mit H.264/H.265 und AAC-Audio.
-- WHIP-Empfang sowie Empfang von FastVideo-Links über WHEP.
-- Ausgabe empfangener Signale über OMT, NDI oder Blackmagic SDI.
-- Hardwarebeschleunigung abhängig von Codec, Grafikhardware und Treiber.
-- Live-Vorschau, Audioauswahl und Diagnoseanzeigen in der Weboberfläche.
+- OMT, NDI and Blackmagic SDI video inputs.
+- WHIP sending with H.264, H.265 or AV1 video and Opus audio.
+- SRT sending in caller mode with H.264/H.265 video and AAC audio.
+- WHIP reception and playback of FastVideo links through WHEP.
+- Output of received signals through OMT, NDI or Blackmagic SDI.
+- Hardware acceleration depending on the codec, graphics hardware and drivers.
+- Live previews, audio selection and diagnostics in the web interface.
 
 ## Installation
 
-1. Den [Windows-Installer](https://github.com/peteraellig/FastVideoBridge/releases/download/v0.0.5.14/FastVideoBridge-Setup-0.0.5.14.exe) herunterladen und ausführen.
-2. FastVideo Bridge über die angelegte Verknüpfung starten.
-3. Die Bedienoberfläche öffnet sich unter [http://127.0.0.1:18879/sender](http://127.0.0.1:18879/sender).
-4. Quelle, Sendeziel oder Empfang konfigurieren und starten. Zum Beenden die Verknüpfung **Stop FastVideo Bridge** verwenden.
+1. Download and run the [Windows installer](https://github.com/peteraellig/FastVideoBridge/releases/download/v0.0.5.14/FastVideoBridge-Setup-0.0.5.14.exe).
+2. Launch FastVideo Bridge using the shortcut created by the installer.
+3. The control interface opens at [http://127.0.0.1:18879/sender](http://127.0.0.1:18879/sender).
+4. Configure your source, destination or receiver and start streaming. Use the **Stop FastVideo Bridge** shortcut to shut down the application.
 
-Voraussetzung ist Windows x64. Python, der Go-Gateway und die OMT-Laufzeit sind im Installer enthalten. Für NDI-Ein-/Ausgabe müssen [NDI Tools](https://ndi.video/tools/) separat installiert werden. Für Blackmagic SDI wird Blackmagic Desktop Video benötigt. Aktuelle Grafiktreiber werden empfohlen.
+Windows x64 is required. The installer includes Python, the Go media gateway and the OMT runtime. For NDI input or output, install [NDI Tools](https://ndi.video/tools/) separately. Blackmagic SDI requires Blackmagic Desktop Video. Up-to-date graphics drivers are recommended.
 
-Für eingehenden WHIP-Verkehr müssen der gewählte Empfangsport und gegebenenfalls die Router-Portweiterleitung eingerichtet sein. Hinweise dazu stehen in der Hilfe der Bridge. WHEP-Empfang baut eine ausgehende Verbindung auf.
+For incoming WHIP traffic, configure the selected receiving port and router port forwarding if needed. See the Bridge's built-in help for details. WHEP reception uses an outgoing connection.
 
-Die [SHA-256-Prüfsumme](https://github.com/peteraellig/FastVideoBridge/releases/download/v0.0.5.14/FastVideoBridge-Setup-0.0.5.14.exe.sha256) liegt beim Release. Der fertige Installer wird als Release-Datei bereitgestellt; er ist nicht Bestandteil des Git-Quellcodearchivs.
+A [SHA-256 checksum](https://github.com/peteraellig/FastVideoBridge/releases/download/v0.0.5.14/FastVideoBridge-Setup-0.0.5.14.exe.sha256) is included with the release. The prebuilt installer is provided as a release asset and is not included in the Git source archive.
 
-## Selbst bauen
+## Build from source
 
-Benötigt werden Python 3.12 x64 und Go 1.26 oder neuer. In PowerShell im Projektverzeichnis:
+Install Python 3.12 x64 and Go 1.26 or newer. Run the following commands in PowerShell from the project directory:
 
 ```powershell
 py -3.12 -m venv .venv
@@ -45,22 +45,22 @@ Pop-Location
 .\Start-Bridge.bat
 ```
 
-Eine bereits vorhandene persönliche Konfiguration nicht überschreiben. Weitere Schritte zum Erstellen eines Windows-Installers stehen in [BUILD.txt](BUILD.txt).
+Do not overwrite an existing personal configuration. See [BUILD.txt](BUILD.txt) for additional instructions on creating a Windows installer.
 
-`gateway/vendor` enthält die benötigten Go-Bibliotheken einschließlich einer lokalen GoSRT-Anpassung. Diesen Ordner beim Build beibehalten. `vendor/omt` enthält die benötigten nativen OMT-Bibliotheken und deren Lizenz.
+`gateway/vendor` contains the required Go libraries, including a local GoSRT patch. Keep this directory when building. `vendor/omt` contains the required native OMT libraries and their license.
 
-## Dokumentation
+## Documentation
 
-- [Beschreibung und Bedienung](documents/BRIDGE-README.md)
-- [Build-Anleitung](BUILD.txt)
-- [Weitere Projektdokumente](documents/)
+- [Overview and usage](documents/BRIDGE-README.md)
+- [Build instructions](BUILD.txt)
+- [Additional project documents](documents/)
 
-Historische Entwicklungsdokumente können lokale Pfade und ältere Versionsstände enthalten. Testsuiten, Laufzeitlogs, persönliche Einstellungen und Arbeitsdaten gehören nicht zu diesem Quellcode-Export.
+Historical development documents may reference local paths and older versions. Test suites, runtime logs, personal settings and working data are excluded from this source export.
 
-## Lizenz
+## License
 
-Der eigene FastVideo-Bridge-Code steht unter der **BSD Zero Clause License (0BSD)**, siehe [LICENSE](LICENSE).
+The project's own FastVideo Bridge code is licensed under the **BSD Zero Clause License (0BSD)**. See [LICENSE](LICENSE).
 
-Mitgelieferte Drittanbieterkomponenten behalten ihre jeweiligen Lizenzen. Die Lizenztexte befinden sich insbesondere in `gateway/vendor`, `gateway/third_party_licenses` und `vendor/omt/LICENSE.txt`. Im Windows-Installer sind weitere Lizenztexte bei den enthaltenen Laufzeitkomponenten hinterlegt.
+Bundled third-party components retain their respective licenses. License texts can be found in `gateway/vendor`, `gateway/third_party_licenses` and `vendor/omt/LICENSE.txt`. The Windows installer includes additional license texts alongside its bundled runtime components.
 
-NDI® ist eine eingetragene Marke von Vizrt NDI AB.
+NDI® is a registered trademark of Vizrt NDI AB.
