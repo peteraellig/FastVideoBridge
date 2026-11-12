@@ -1,0 +1,921 @@
+{
+  "IDeckLinkIterator": {
+    "iid": "50fb36cd-3063-4b73-bdbb-958087f2d8ba",
+    "methods": [
+      {
+        "name": "Next",
+        "result": "int32",
+        "args": [
+          "pointer"
+        ],
+        "hresult": true
+      }
+    ]
+  },
+  "IDeckLink": {
+    "iid": "c418fbdd-0587-48ed-8fe5-640f0a14af91",
+    "methods": [
+      {
+        "name": "GetModelName",
+        "result": "int32",
+        "args": [
+          "pointer"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "GetDisplayName",
+        "result": "int32",
+        "args": [
+          "pointer"
+        ],
+        "hresult": true
+      }
+    ]
+  },
+  "IDeckLinkStatus": {
+    "iid": "5f558200-4028-49bc-beac-db3fa4a96e46",
+    "methods": [
+      {
+        "name": "GetFlag",
+        "result": "int32",
+        "args": [
+          "int32",
+          "pointer"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "GetInt",
+        "result": "int32",
+        "args": [
+          "int32",
+          "pointer"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "GetFloat",
+        "result": "int32",
+        "args": [
+          "int32",
+          "pointer"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "GetString",
+        "result": "int32",
+        "args": [
+          "int32",
+          "pointer"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "GetBytes",
+        "result": "int32",
+        "args": [
+          "int32",
+          "pointer",
+          "pointer",
+          "pointer"
+        ],
+        "hresult": true
+      }
+    ]
+  },
+  "IDeckLinkProfileAttributes": {
+    "iid": "17d4bf8e-4911-473a-80a0-731cf6ff345b",
+    "methods": [
+      {
+        "name": "GetFlag",
+        "result": "int32",
+        "args": [
+          "int32",
+          "pointer"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "GetInt",
+        "result": "int32",
+        "args": [
+          "int32",
+          "pointer"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "GetFloat",
+        "result": "int32",
+        "args": [
+          "int32",
+          "pointer"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "GetString",
+        "result": "int32",
+        "args": [
+          "int32",
+          "pointer"
+        ],
+        "hresult": true
+      }
+    ]
+  },
+  "IDeckLinkInput_v14_2_1": {
+    "iid": "c21cdb6e-f414-46e4-a636-80a566e0ed37",
+    "methods": [
+      {
+        "name": "DoesSupportVideoMode",
+        "result": "int32",
+        "args": [
+          "int32",
+          "int32",
+          "int32",
+          "int32",
+          "int32",
+          "pointer",
+          "pointer"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "GetDisplayMode",
+        "result": "int32",
+        "args": [
+          "int32",
+          "pointer"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "GetDisplayModeIterator",
+        "result": "int32",
+        "args": [
+          "pointer"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "SetScreenPreviewCallback",
+        "result": "int32",
+        "args": [
+          "pointer"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "EnableVideoInput",
+        "result": "int32",
+        "args": [
+          "int32",
+          "int32",
+          "int32"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "DisableVideoInput",
+        "result": "int32",
+        "args": [],
+        "hresult": true
+      },
+      {
+        "name": "GetAvailableVideoFrameCount",
+        "result": "int32",
+        "args": [
+          "pointer"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "SetVideoInputFrameMemoryAllocator",
+        "result": "int32",
+        "args": [
+          "pointer"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "EnableAudioInput",
+        "result": "int32",
+        "args": [
+          "int32",
+          "int32",
+          "uint32"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "DisableAudioInput",
+        "result": "int32",
+        "args": [],
+        "hresult": true
+      },
+      {
+        "name": "GetAvailableAudioSampleFrameCount",
+        "result": "int32",
+        "args": [
+          "pointer"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "StartStreams",
+        "result": "int32",
+        "args": [],
+        "hresult": true
+      },
+      {
+        "name": "StopStreams",
+        "result": "int32",
+        "args": [],
+        "hresult": true
+      },
+      {
+        "name": "PauseStreams",
+        "result": "int32",
+        "args": [],
+        "hresult": true
+      },
+      {
+        "name": "FlushStreams",
+        "result": "int32",
+        "args": [],
+        "hresult": true
+      },
+      {
+        "name": "SetCallback",
+        "result": "int32",
+        "args": [
+          "pointer"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "GetHardwareReferenceClock",
+        "result": "int32",
+        "args": [
+          "int64",
+          "pointer",
+          "pointer",
+          "pointer"
+        ],
+        "hresult": true
+      }
+    ]
+  },
+  "IDeckLinkOutput_v14_2_1": {
+    "iid": "be2d9020-461e-442f-84b7-e949cb953b9d",
+    "methods": [
+      {
+        "name": "DoesSupportVideoMode",
+        "result": "int32",
+        "args": [
+          "int32",
+          "int32",
+          "int32",
+          "int32",
+          "int32",
+          "pointer",
+          "pointer"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "GetDisplayMode",
+        "result": "int32",
+        "args": [
+          "int32",
+          "pointer"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "GetDisplayModeIterator",
+        "result": "int32",
+        "args": [
+          "pointer"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "SetScreenPreviewCallback",
+        "result": "int32",
+        "args": [
+          "pointer"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "EnableVideoOutput",
+        "result": "int32",
+        "args": [
+          "int32",
+          "int32"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "DisableVideoOutput",
+        "result": "int32",
+        "args": [],
+        "hresult": true
+      },
+      {
+        "name": "SetVideoOutputFrameMemoryAllocator",
+        "result": "int32",
+        "args": [
+          "pointer"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "CreateVideoFrame",
+        "result": "int32",
+        "args": [
+          "int32",
+          "int32",
+          "int32",
+          "int32",
+          "int32",
+          "pointer"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "CreateAncillaryData",
+        "result": "int32",
+        "args": [
+          "int32",
+          "pointer"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "DisplayVideoFrameSync",
+        "result": "int32",
+        "args": [
+          "pointer"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "ScheduleVideoFrame",
+        "result": "int32",
+        "args": [
+          "pointer",
+          "int64",
+          "int64",
+          "int64"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "SetScheduledFrameCompletionCallback",
+        "result": "int32",
+        "args": [
+          "pointer"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "GetBufferedVideoFrameCount",
+        "result": "int32",
+        "args": [
+          "pointer"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "EnableAudioOutput",
+        "result": "int32",
+        "args": [
+          "int32",
+          "int32",
+          "uint32",
+          "int32"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "DisableAudioOutput",
+        "result": "int32",
+        "args": [],
+        "hresult": true
+      },
+      {
+        "name": "WriteAudioSamplesSync",
+        "result": "int32",
+        "args": [
+          "pointer",
+          "uint32",
+          "pointer"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "BeginAudioPreroll",
+        "result": "int32",
+        "args": [],
+        "hresult": true
+      },
+      {
+        "name": "EndAudioPreroll",
+        "result": "int32",
+        "args": [],
+        "hresult": true
+      },
+      {
+        "name": "ScheduleAudioSamples",
+        "result": "int32",
+        "args": [
+          "pointer",
+          "uint32",
+          "int64",
+          "int64",
+          "pointer"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "GetBufferedAudioSampleFrameCount",
+        "result": "int32",
+        "args": [
+          "pointer"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "FlushBufferedAudioSamples",
+        "result": "int32",
+        "args": [],
+        "hresult": true
+      },
+      {
+        "name": "SetAudioCallback",
+        "result": "int32",
+        "args": [
+          "pointer"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "StartScheduledPlayback",
+        "result": "int32",
+        "args": [
+          "int64",
+          "int64",
+          "double"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "StopScheduledPlayback",
+        "result": "int32",
+        "args": [
+          "int64",
+          "pointer",
+          "int64"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "IsScheduledPlaybackRunning",
+        "result": "int32",
+        "args": [
+          "pointer"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "GetScheduledStreamTime",
+        "result": "int32",
+        "args": [
+          "int64",
+          "pointer",
+          "pointer"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "GetReferenceStatus",
+        "result": "int32",
+        "args": [
+          "pointer"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "GetHardwareReferenceClock",
+        "result": "int32",
+        "args": [
+          "int64",
+          "pointer",
+          "pointer",
+          "pointer"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "GetFrameCompletionReferenceTimestamp",
+        "result": "int32",
+        "args": [
+          "pointer",
+          "int64",
+          "pointer"
+        ],
+        "hresult": true
+      }
+    ]
+  },
+  "IDeckLinkDisplayModeIterator": {
+    "iid": "9c88499f-f601-4021-b80b-032e4eb41c35",
+    "methods": [
+      {
+        "name": "Next",
+        "result": "int32",
+        "args": [
+          "pointer"
+        ],
+        "hresult": true
+      }
+    ]
+  },
+  "IDeckLinkDisplayMode": {
+    "iid": "3eb2c1ab-0a3d-4523-a3ad-f40d7fb14e78",
+    "methods": [
+      {
+        "name": "GetName",
+        "result": "int32",
+        "args": [
+          "pointer"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "GetDisplayMode",
+        "result": "int32",
+        "args": [],
+        "hresult": false
+      },
+      {
+        "name": "GetWidth",
+        "result": "int32",
+        "args": [],
+        "hresult": false
+      },
+      {
+        "name": "GetHeight",
+        "result": "int32",
+        "args": [],
+        "hresult": false
+      },
+      {
+        "name": "GetFrameRate",
+        "result": "int32",
+        "args": [
+          "pointer",
+          "pointer"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "GetFieldDominance",
+        "result": "int32",
+        "args": [],
+        "hresult": false
+      },
+      {
+        "name": "GetFlags",
+        "result": "int32",
+        "args": [],
+        "hresult": false
+      }
+    ]
+  },
+  "IDeckLinkVideoFrame_v14_2_1": {
+    "iid": "3f716fe0-f023-4111-be5d-ef4414c05b17",
+    "methods": [
+      {
+        "name": "GetWidth",
+        "result": "int32",
+        "args": [],
+        "hresult": false
+      },
+      {
+        "name": "GetHeight",
+        "result": "int32",
+        "args": [],
+        "hresult": false
+      },
+      {
+        "name": "GetRowBytes",
+        "result": "int32",
+        "args": [],
+        "hresult": false
+      },
+      {
+        "name": "GetPixelFormat",
+        "result": "int32",
+        "args": [],
+        "hresult": false
+      },
+      {
+        "name": "GetFlags",
+        "result": "int32",
+        "args": [],
+        "hresult": false
+      },
+      {
+        "name": "GetBytes",
+        "result": "int32",
+        "args": [
+          "pointer"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "GetTimecode",
+        "result": "int32",
+        "args": [
+          "int32",
+          "pointer"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "GetAncillaryData",
+        "result": "int32",
+        "args": [
+          "pointer"
+        ],
+        "hresult": true
+      }
+    ]
+  },
+  "IDeckLinkMutableVideoFrame_v14_2_1": {
+    "iid": "69e2639f-40da-4e19-b6f2-20ace815c390",
+    "methods": [
+      {
+        "name": "GetWidth",
+        "result": "int32",
+        "args": [],
+        "hresult": false
+      },
+      {
+        "name": "GetHeight",
+        "result": "int32",
+        "args": [],
+        "hresult": false
+      },
+      {
+        "name": "GetRowBytes",
+        "result": "int32",
+        "args": [],
+        "hresult": false
+      },
+      {
+        "name": "GetPixelFormat",
+        "result": "int32",
+        "args": [],
+        "hresult": false
+      },
+      {
+        "name": "GetFlags",
+        "result": "int32",
+        "args": [],
+        "hresult": false
+      },
+      {
+        "name": "GetBytes",
+        "result": "int32",
+        "args": [
+          "pointer"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "GetTimecode",
+        "result": "int32",
+        "args": [
+          "int32",
+          "pointer"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "GetAncillaryData",
+        "result": "int32",
+        "args": [
+          "pointer"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "SetFlags",
+        "result": "int32",
+        "args": [
+          "int32"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "SetTimecode",
+        "result": "int32",
+        "args": [
+          "int32",
+          "pointer"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "SetTimecodeFromComponents",
+        "result": "int32",
+        "args": [
+          "int32",
+          "uint32",
+          "uint32",
+          "uint32",
+          "uint32",
+          "int32"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "SetAncillaryData",
+        "result": "int32",
+        "args": [
+          "pointer"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "SetTimecodeUserBits",
+        "result": "int32",
+        "args": [
+          "int32",
+          "uint32"
+        ],
+        "hresult": true
+      }
+    ]
+  },
+  "IDeckLinkVideoInputFrame_v14_2_1": {
+    "iid": "05cfe374-537c-4094-9a57-680525118f44",
+    "methods": [
+      {
+        "name": "GetWidth",
+        "result": "int32",
+        "args": [],
+        "hresult": false
+      },
+      {
+        "name": "GetHeight",
+        "result": "int32",
+        "args": [],
+        "hresult": false
+      },
+      {
+        "name": "GetRowBytes",
+        "result": "int32",
+        "args": [],
+        "hresult": false
+      },
+      {
+        "name": "GetPixelFormat",
+        "result": "int32",
+        "args": [],
+        "hresult": false
+      },
+      {
+        "name": "GetFlags",
+        "result": "int32",
+        "args": [],
+        "hresult": false
+      },
+      {
+        "name": "GetBytes",
+        "result": "int32",
+        "args": [
+          "pointer"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "GetTimecode",
+        "result": "int32",
+        "args": [
+          "int32",
+          "pointer"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "GetAncillaryData",
+        "result": "int32",
+        "args": [
+          "pointer"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "GetStreamTime",
+        "result": "int32",
+        "args": [
+          "pointer",
+          "pointer",
+          "int64"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "GetHardwareReferenceTimestamp",
+        "result": "int32",
+        "args": [
+          "int64",
+          "pointer",
+          "pointer"
+        ],
+        "hresult": true
+      }
+    ]
+  },
+  "IDeckLinkAudioInputPacket": {
+    "iid": "e43d5870-2894-11de-8c30-0800200c9a66",
+    "methods": [
+      {
+        "name": "GetSampleFrameCount",
+        "result": "int32",
+        "args": [],
+        "hresult": false
+      },
+      {
+        "name": "GetBytes",
+        "result": "int32",
+        "args": [
+          "pointer"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "GetPacketTime",
+        "result": "int32",
+        "args": [
+          "pointer",
+          "int64"
+        ],
+        "hresult": true
+      }
+    ]
+  },
+  "IDeckLinkInputCallback_v14_2_1": {
+    "iid": "c6fce4c9-c4e4-4047-82fb-5d238232a902",
+    "methods": [
+      {
+        "name": "VideoInputFormatChanged",
+        "result": "int32",
+        "args": [
+          "int32",
+          "pointer",
+          "int32"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "VideoInputFrameArrived",
+        "result": "int32",
+        "args": [
+          "pointer",
+          "pointer"
+        ],
+        "hresult": true
+      }
+    ]
+  },
+  "IDeckLinkVideoOutputCallback_v14_2_1": {
+    "iid": "20aa5225-1958-47cb-820b-80a8d521a6ee",
+    "methods": [
+      {
+        "name": "ScheduledFrameCompleted",
+        "result": "int32",
+        "args": [
+          "pointer",
+          "int32"
+        ],
+        "hresult": true
+      },
+      {
+        "name": "ScheduledPlaybackHasStopped",
+        "result": "int32",
+        "args": [],
+        "hresult": true
+      }
+    ]
+  },
+  "iterator_class": "ba6c6f44-6da5-4dce-94aa-ee2d1372a676"
+}

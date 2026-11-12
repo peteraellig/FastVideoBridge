@@ -1,0 +1,23 @@
+# Local settings and user data
+/fastvideo.settings.json
+/user/
+/work/
+.env
+.env.*
+!.env.example
+# Generated output and local toolchains
+/dist/
+/.runtime/
+/.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.log
+Thumbs.db
+/gateway/*.exe
+/installer/tools/
+/installer/stage/
+/installer/*.exe
+/installer/*.zip
+/installer/smoke-report*.json
+# Keep gateway/vendor (patched Go sources) and vendor/omt (required runtime).

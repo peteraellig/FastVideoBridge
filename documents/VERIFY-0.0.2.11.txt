@@ -1,0 +1,8 @@
+FastVideo Bridge 0.0.2.11 - 2026-10-08
+Receiver now reports decoded video width/height and media-clock frame rate, actual decoded audio channels/sample rate and recent audio presence.
+Received signal displays Receiving OK with format/codec/audio details while fresh video is arriving.
+OMT output separately identifies the local computer and output source name.
+No source-computer identity is inferred from the received stream.
+Integration tests verified H264 and AV1 WHIP reconnect into OMT, video format 320x180p25 and Opus stereo 48 kHz. Both tests passed.
+Local UI layout verified. The .104 sender remained connected during changes.
+Receiver backend update on .102 requires its local Update-Bridge helper or Setup 0.0.2.11, followed by receiver start.

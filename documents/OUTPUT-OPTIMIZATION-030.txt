@@ -1,0 +1,32 @@
+FastVideo Bridge 0.0.2.30 - native output comparison, 10 October 2026
+
+OMT, measured locally on .104 with a native connected OMT receiver:
+12 captured 1920x1080 NV12 pictures, 50 fps, 200 pictures per run;
+two rounds, SDK/direct order reversed. Output quality unchanged (OMT HQ).
+
+                       Mean call ms      p95 call ms
+Standard OMT SDK       2.477 / 2.449      3.104 / 3.018
+Direct VMX, 4 threads  1.417 / 1.340      1.827 / 1.641
+
+Every run delivered 200 pictures and 109123957 compressed bytes. Separate
+tests confirmed exact encoded byte equality when changing VMX worker count,
+native OMT decoding, colours, timestamps, size changes and SDK fallback.
+The direct path avoids packing two GPU download planes into a large NV12
+buffer. It uses the public bundled VMX API and existing OMT network sender.
+These are output-call times, not total WHIP/monitor-to-monitor latency, and
+do not establish the improvement on .102 or on different CPUs/content.
+
+NDI, current asynchronous NV12 versus 64-byte-aligned packing buffers:
+Same pictures and same per-frame copying operations, 50 fps, reversed order.
+Current: mean call 1.160 / 0.672 ms, p95 2.620 / 0.914 ms.
+Aligned: mean call 0.813 / 0.769 ms, p95 1.269 / 1.091 ms.
+Process CPU including native reception:
+Current 12.847 / 9.549 ms per frame; aligned 11.024 / 10.330 ms per frame.
+All measured receive rates about 50 fps. No repeatable alignment advantage;
+keep the existing asynchronous path and buffer ownership rules unchanged.
+The standard NDI API used here does not expose VMX-style thread selection.
+
+21 selected integration/concurrency/format/audio tests passed, including
+H264, H265 and AV1 WHIP reception with actual native OMT and NDI receivers.
+Raw comparisons: C:\FastVideoBridge\work\omt-direct-comparison.json and
+C:\FastVideoBridge\work\ndi-alignment-comparison.json.

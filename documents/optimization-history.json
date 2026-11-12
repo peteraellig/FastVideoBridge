@@ -1,0 +1,1774 @@
+{
+  "schema_version": 1,
+  "recorded_date": "2026-10-12",
+  "timezone": "Europe/Zurich",
+  "metric_convention": "Explicit suffixes give units. Ranges describe observed ranges, not confidence intervals. Unknown values are null; cumulative counters must not be read as per-window losses.",
+  "entry_requirements": [
+    "id",
+    "date",
+    "product",
+    "hypothesis",
+    "change",
+    "decision",
+    "reason",
+    "workload",
+    "metrics",
+    "evidence",
+    "deployment_state"
+  ],
+  "future_entry_fields": [
+    "prior_experiment_ids",
+    "baseline_hashes",
+    "candidate_hashes",
+    "window_seconds",
+    "session_ids",
+    "before_metrics",
+    "after_metrics",
+    "rollback_result"
+  ],
+  "decision_values": [
+    "accepted",
+    "rejected",
+    "inconclusive",
+    "provisional"
+  ],
+  "product": "bridge",
+  "entries": [
+    {
+      "id": "bridge-041-sdi-input",
+      "date": "2026-10-12",
+      "product": "bridge",
+      "hypothesis": "Separate SDI image conversion from audio draining.",
+      "change": "Own UYVY pixels in callback; serial NV12 conversion; bounded queues.",
+      "decision": "accepted",
+      "reason": "720p50 input/audio improved; no encoder fps gain established.",
+      "metrics": {
+        "sdi_pack_p95_ms_before": [
+          16.9,
+          22.8
+        ],
+        "sdi_pack_p95_ms_after": [
+          1.43,
+          2.42
+        ]
+      },
+      "evidence": [
+        "documents/BRIDGE-OPTIMIERUNGEN-FUER-FASTVIDEO.md"
+      ],
+      "workload": {
+        "machine": ".102",
+        "format": "720p50"
+      },
+      "deployment_state": "Historical record; verify installed file hashes before deployment.",
+      "record_basis": "Prior session measurements and retained artifacts; not a new live test."
+    },
+    {
+      "id": "bridge-043-extra-audio-reserve",
+      "date": "2026-10-12",
+      "product": "bridge",
+      "hypothesis": "More SDI audio preroll would improve startup.",
+      "change": "Two-frame audio reserve (1920 samples at 720p50).",
+      "decision": "rejected",
+      "reason": "Field test added queueing/delay. Final startup checks require three video frames and nonempty audio, not two-frame reserve.",
+      "metrics": {},
+      "evidence": [],
+      "workload": {},
+      "deployment_state": "Historical record; verify installed file hashes before deployment.",
+      "record_basis": "Prior session measurements and retained artifacts; not a new live test."
+    },
+    {
+      "id": "bridge-044-sdi-lock",
+      "date": "2026-10-12",
+      "product": "bridge",
+      "hypothesis": "Colour conversion holding the SDK lock delays audio scheduling.",
+      "change": "Move SDI colour conversion outside shared SDK lock; preserve native allocation/scheduling ownership.",
+      "decision": "accepted",
+      "reason": "Two 720p50 sessions completed about 50 fps without observed receive/SDI/network losses.",
+      "metrics": {
+        "completed_fps": [
+          49.987971482990005,
+          50.00053626415559
+        ],
+        "video_schedule_p95_ms_range": [
+          4.232,
+          8.901
+        ],
+        "audio_lock_p95_ms_range": [
+          0.74,
+          3.479
+        ],
+        "sdi_late_delta": 0,
+        "sdi_dropped_delta": 0,
+        "network_loss_delta": 0
+      },
+      "evidence": [
+        "work/102-output-044-live/summary.json"
+      ],
+      "workload": {
+        "machine": ".102",
+        "format": "1280x720p50 H264 -> D3D11VA -> SDI",
+        "measured_window_seconds": 303.30593156814575,
+        "sessions": 2
+      },
+      "deployment_state": "Validated v44 baseline for this workload only; 1080p50 remains unresolved.",
+      "record_basis": "Prior session measurements and retained artifacts; not a new live test."
+    },
+    {
+      "id": "bridge-1080-baseline",
+      "date": "2026-10-12",
+      "product": "bridge",
+      "hypothesis": "Identify the real 1080p50 duplex bottleneck.",
+      "change": "Profile capture, sender, decoder and hardware completion independently.",
+      "decision": "inconclusive",
+      "reason": "Capture remained 50 fps but sender and SDI completion lagged; no network loss. Does not establish a hardware throughput limit.",
+      "metrics": {
+        "sender_fps_approx": [
+          46,
+          47
+        ],
+        "completed_fps_25s": 44.44,
+        "sdi_late_delta": 29,
+        "sdi_dropped_delta": 17,
+        "output_p95_ms_approx": [
+          21,
+          23.6
+        ]
+      },
+      "evidence": [],
+      "workload": {
+        "machine": ".102",
+        "format": "1080p50 H264 local duplex -> SDI",
+        "gpu": "Quadro RTX 4000"
+      },
+      "deployment_state": "Historical record; verify installed file hashes before deployment.",
+      "record_basis": "Prior session measurements and retained artifacts; not a new live test."
+    },
+    {
+      "id": "bridge-1080-shared-nv12",
+      "date": "2026-10-12",
+      "product": "bridge",
+      "hypothesis": "Remove child-worker NV12 pixel duplication.",
+      "change": "Use shared packed NV12 buffer with serial one-frame-in-flight ownership; padded layouts retain owned fallback.",
+      "decision": "provisional",
+      "reason": "Preparation improved and sender-only fps improved. Duplex remained over budget; not approved as a stable release.",
+      "metrics": {
+        "worker_prepare_p95_ms_before": 3.359,
+        "worker_prepare_p95_ms_after_approx": [
+          0.1,
+          0.15
+        ],
+        "sender_only_fps_before_approx": 47,
+        "sender_only_fps_after_approx": 49.18
+      },
+      "evidence": [
+        "work/isolated_encoder.before-1080-profile.py",
+        "work/isolated_encoder.profile-before-zero-copy.py"
+      ],
+      "workload": {
+        "machine": ".102",
+        "format": "1080p50 H264",
+        "conditions": "Compare sender-only separately from duplex."
+      },
+      "deployment_state": "Experimental source/deployment was modified in prior turn; current installation must be inspected.",
+      "record_basis": "Prior session measurements and retained artifacts; not a new live test."
+    },
+    {
+      "id": "bridge-1080-sdi-one-thread",
+      "date": "2026-10-12",
+      "product": "bridge",
+      "hypothesis": "Automatic swscale threads compete with duplex encoding.",
+      "change": "Force SDI UYVY conversion to one thread.",
+      "decision": "rejected",
+      "reason": "Conversion and output p95 worsened; receiver throughput/drops worsened. Do not repeat identical workload without new evidence.",
+      "metrics": {
+        "sdi_colour_p95_ms_after": 22.6,
+        "output_p95_ms_after": 35.2,
+        "receiver_fps_after_approx": 43.7
+      },
+      "evidence": [
+        "work/sdi_output.before-1080-bounded.py"
+      ],
+      "workload": {
+        "machine": ".102",
+        "format": "1080p50 local duplex"
+      },
+      "deployment_state": "One-thread change was reverted in prior turn.",
+      "record_basis": "Prior session measurements and retained artifacts; not a new live test."
+    },
+    {
+      "id": "bridge-1080-copy-concurrency",
+      "date": "2026-10-12",
+      "product": "bridge",
+      "hypothesis": "GIL-releasing copies and four conversion threads reduce contention.",
+      "change": "C.memmove in parent/engine and SDI conversion threads=4.",
+      "decision": "rejected",
+      "reason": "No overall stable 50 fps; parent copy wall p95 rose with GIL reacquisition.",
+      "metrics": {
+        "parent_copy_p95_ms_before_approx": [
+          0.6,
+          1.0
+        ],
+        "parent_copy_p95_ms_after_approx": 7.7,
+        "output_p95_ms_after_approx": 23.5
+      },
+      "evidence": [],
+      "workload": {
+        "machine": ".102",
+        "format": "1080p50 local duplex"
+      },
+      "deployment_state": "C.memmove and four-thread variants were reverted in prior turn.",
+      "record_basis": "Prior session measurements and retained artifacts; not a new live test."
+    },
+    {
+      "id": "bridge-1080-gil-1ms",
+      "date": "2026-10-12",
+      "product": "bridge",
+      "hypothesis": "Shorter Python thread switch interval reduces scheduling delay.",
+      "change": "Set global process switch interval to 1 ms; retain shared NV12 experiment.",
+      "decision": "rejected",
+      "reason": "Last observed sample remained over budget with active SDI queue loss warnings. Coupled experiment, not clean proof about GIL alone.",
+      "metrics": {
+        "sender_p95_ms_last": 32.79,
+        "receiver_output_p95_ms_last": 22.461,
+        "schedule_lead_ms_last": 151.12,
+        "sdi_video_drops_cumulative_last": 163,
+        "sdi_audio_drops_cumulative_last": 199
+      },
+      "evidence": [
+        "work/whip_receive.before-1080-scheduling.py"
+      ],
+      "workload": {
+        "machine": ".102",
+        "format": "1080p50 local duplex",
+        "measurement": "Single last recorded sample; cumulative drops are not steady-window deltas."
+      },
+      "deployment_state": "Last known experiment in prior turn; rollback not verified. Inspect before further tests or release.",
+      "record_basis": "Prior session measurements and retained artifacts; not a new live test."
+    },
+    {
+      "id": "bridge-packaging-hidden-runtime",
+      "date": "2026-10-12",
+      "product": "bridge",
+      "hypothesis": "Prepared payload directories alone prove completeness.",
+      "change": "Installer omitted hidden Python runtime files, including aiohttp code.",
+      "decision": "rejected",
+      "reason": "Check complete final installed file list and hashes; correct payload preparation. Previous repair does not validate a future installer.",
+      "metrics": {
+        "reported_missing_runtime_files": 1896
+      },
+      "evidence": [
+        "installer/prepare_payload.py",
+        "installer/verify_installer.py"
+      ],
+      "workload": {},
+      "deployment_state": "Historical installer failure; v44 final smoke report passed with 2060 payload files.",
+      "record_basis": "Prior session measurements and retained artifacts; not a new live test."
+    },
+    {
+      "id": "bridge-update-hidden-target",
+      "date": "2026-10-12",
+      "product": "bridge",
+      "hypothesis": "Normal overwrite will work for installed Python files.",
+      "change": "Checksummed helper update attempted to overwrite hidden target files.",
+      "decision": "rejected",
+      "reason": "Diagnosed hidden attribute write failures; clearing the target hidden flag enabled authorized updates. Stop repeated generic retries and capture underlying error.",
+      "metrics": {},
+      "evidence": [
+        "work/isolated_encoder.before-1080-profile.py"
+      ],
+      "workload": {},
+      "deployment_state": "Historical record; verify installed file hashes before deployment.",
+      "record_basis": "Prior session measurements and retained artifacts; not a new live test."
+    },
+    {
+      "id": "bridge-first-install-defaults",
+      "date": "2026-10-12",
+      "product": "bridge",
+      "hypothesis": "Development-machine defaults are portable.",
+      "change": "Forced AV1/QSV; internal port 20000; package import and moved VBS assumptions.",
+      "decision": "rejected",
+      "reason": "Non-Intel/non-AV1 .102 and occupied port prevented startup. Select supported hardware/defaults, verify package imports and desktop launchers. These are release checks, not speed tweaks.",
+      "metrics": {},
+      "evidence": [],
+      "workload": {},
+      "deployment_state": "Historical record; verify installed file hashes before deployment.",
+      "record_basis": "Prior session measurements and retained artifacts; not a new live test."
+    },
+    {
+      "id": "bridge-044-installer",
+      "date": "2026-10-12",
+      "product": "bridge",
+      "hypothesis": "Final installer matches prepared runtime and boots independently.",
+      "change": "Extract/install final v44 payload and run embedded-runtime/server/gateway smoke checks.",
+      "decision": "accepted",
+      "reason": "Retained v44 report passes. Does not cover current experimental source or all hardware.",
+      "metrics": {
+        "payload_files": 2060,
+        "missing_files": 0,
+        "mismatched_files": 0,
+        "server_http": 200,
+        "gateway_http": 200
+      },
+      "evidence": [
+        "installer/smoke-report-0.0.2.44.json"
+      ],
+      "workload": {},
+      "deployment_state": "Final v44 artifact verified historically; no new installer built by skill creation.",
+      "record_basis": "Prior session measurements and retained artifacts; not a new live test."
+    },
+    {
+      "id": "bridge-1080-controlled-baseline-profile",
+      "date": "2026-10-12",
+      "product": "bridge",
+      "hypothesis": "Distinguish sender native encode versus IPC/event-loop overhead and identify receiver reconnection exception.",
+      "change": "Restore original v44 pixels/thread settings; add bounded stage timings and exception logging only.",
+      "decision": "inconclusive",
+      "reason": "Baseline sender-only still about 40 fps; investigate before further media changes.",
+      "workload": {
+        "machine": ".102",
+        "format": "1080p50 H264 SDI duplex and sender-only"
+      },
+      "metrics": {
+        "baseline_sender_only_fps": 39.783134514624216,
+        "baseline_sender_only_audio_missing_delta": 0
+      },
+      "evidence": [
+        "work/102-1080-controlled/baseline-sender-only.json",
+        "work/102-1080-controlled/baseline-restore.json"
+      ],
+      "deployment_state": "Original runtime restored; profiling-only build pending.",
+      "prior_experiment_ids": [
+        "bridge-044-sdi-lock",
+        "bridge-1080-gil-1ms",
+        "bridge-1080-shared-nv12"
+      ]
+    },
+    {
+      "id": "bridge-1080-declared-source-cadence",
+      "date": "2026-10-12",
+      "product": "bridge",
+      "hypothesis": "Packet/frame gaps must not be interpreted as changes in SDI output format.",
+      "change": "Use decoded bitstream framerate in private frame metadata; gap-resistant minimum-interval fallback.",
+      "decision": "accepted",
+      "reason": "A stable session at declared 50 fps replaced repeated unsupported 33.333 fps SDI reconnects. Throughput still only about 38 fps; not a complete 1080p50 fix.",
+      "workload": {
+        "machine": ".102",
+        "format": "1080p50 H264 SDI duplex"
+      },
+      "metrics": {
+        "encoded_fps": 38.3649,
+        "received_fps": 38.3366,
+        "completed_fps": 38.2234,
+        "window_seconds": 35.3448,
+        "audio_missing_samples_delta": 0,
+        "sdi_late_delta": 0,
+        "sdi_dropped_delta": 0,
+        "sdi_video_queue_delta": 6,
+        "sdi_audio_drops_delta": 30
+      },
+      "evidence": [
+        "tests/test_receiver_cadence.py",
+        "tests/test_receive_hardware.py",
+        "work/102-1080-controlled/baseline-duplex.json",
+        "work/102-1080-controlled/declared-cadence-duplex-summary.json"
+      ],
+      "deployment_state": "Active on .102; no installer rebuilt.",
+      "baseline_hashes": {
+        "fastvideo/receive_decoder.py": "964a24a2ecd3f650d67cced679dd4a28b8dbe6a0e16edbddc811dbba641a9812",
+        "fastvideo/whip_receive.py": "89ac54d4c7544541de75297c0afc559ddb0ff315bb98561aeeeea86b2ca88714"
+      },
+      "candidate_hashes": {
+        "fastvideo/receive_decoder.py": "cf4ff494067d1618ecb6c9248ea10e4053ec83307f8daf41aebe464ae86fa773",
+        "fastvideo/whip_receive.py": "871a5693b09c2c37d90c9e9d581d43cffc6c234d71e4e67e02a2f924a78dea8b"
+      },
+      "prior_experiment_ids": [
+        "bridge-1080-controlled-baseline-profile"
+      ]
+    },
+    {
+      "id": "bridge-1080-direct-encode-future",
+      "date": "2026-10-12",
+      "product": "bridge",
+      "hypothesis": "Redundant asyncio completion hops add main-loop delay after native encoding.",
+      "change": "Await executor future directly with copied context and shield/drain preserved; native encoder/pixels unchanged.",
+      "decision": "rejected",
+      "reason": "No live benefit: sent 37.35 fps and completed 35.25 fps with new hardware/queue loss. Native ownership tests passing did not prove performance.",
+      "workload": {
+        "machine": ".102",
+        "format": "1080p50 SDI H264 local duplex"
+      },
+      "metrics": {
+        "sent_fps": 37.3497,
+        "completed_fps": 35.2459,
+        "sdi_late_delta": 46,
+        "sdi_dropped_delta": 2,
+        "sdi_video_queue_delta": 37,
+        "sdi_audio_drops_delta": 86
+      },
+      "evidence": [
+        "tests/test_publisher_lifecycle.py",
+        "work/102-1080-controlled/publisher.before-direct-future.py",
+        "work/102-1080-controlled/direct-future-duplex-summary.json"
+      ],
+      "deployment_state": "Reverted on .102 by successful request c783214854a04419809f24f793bc03e5 at epoch 1791834513.9876018. Original publisher hash restored: 60dd68a4de71da4b180ae4ab940b4c2abd627f89a7e7484ee32e9887e8580975.",
+      "prior_experiment_ids": [
+        "bridge-1080-declared-source-cadence"
+      ],
+      "baseline_hashes": {
+        "fastvideo/publisher.py": "60dd68a4de71da4b180ae4ab940b4c2abd627f89a7e7484ee32e9887e8580975"
+      },
+      "candidate_hashes": {
+        "fastvideo/publisher.py": "a628d5a4ba1e6ffc74413f8dce5f96c00707a1f97972f66d0efdbe28167bc66a"
+      }
+    },
+    {
+      "id": "bridge-1080-shared-after-cadence-fix",
+      "date": "2026-10-12",
+      "product": "bridge",
+      "hypothesis": "Previously measured child copy reduction may improve full duplex after removing the now-proven false-format reconnects.",
+      "change": "Only shared packed NV12 child input; original thread interval, publisher and copy routines. Revert rejected direct-future experiment.",
+      "decision": "rejected",
+      "reason": "Removing child copy reduced preparation to 0.15 ms p95 but did not deliver 50 fps: 39.07 fps sent. SDI completion late +1430 and dropped +66 in 55.59 s; output lead -16.8 ms. Not a safe duplex improvement.",
+      "workload": {
+        "machine": ".102",
+        "format": "1080p50 SDI H264 duplex"
+      },
+      "metrics": {
+        "elapsed_seconds": 55.589924812316895,
+        "samples": 12,
+        "status": {
+          "input_frame_count_delta": 2800,
+          "video_encode_count_delta": 2172,
+          "audio_encode_count_delta": 2512,
+          "audio_missing_samples_delta": 0,
+          "audio_buffer_drops_delta": 0,
+          "input_frame_count_fps": 50.36883948761183,
+          "video_encode_count_fps": 39.07182834539032,
+          "encode_p95_ms_range": [
+            24.85,
+            36.9
+          ],
+          "pipeline_timings_last": {
+            "receive_wait_and_copy": {
+              "mean_ms": 2.845,
+              "p95_ms": 8.763,
+              "max_ms": 14.935,
+              "samples": 250
+            },
+            "audio_prepare": {
+              "mean_ms": 3.48,
+              "p95_ms": 10.182,
+              "max_ms": 18.874,
+              "samples": 250
+            },
+            "release_lateness": {
+              "mean_ms": 3.002,
+              "p95_ms": 8.949,
+              "max_ms": 17.449,
+              "samples": 250
+            },
+            "video_colour_convert_shared": {
+              "mean_ms": 9.493,
+              "p95_ms": 14.906,
+              "max_ms": 19.105,
+              "samples": 250
+            },
+            "video_frame_copy": {
+              "mean_ms": 13.645,
+              "p95_ms": 18.7,
+              "max_ms": 22.682,
+              "samples": 250
+            }
+          }
+        },
+        "whip": {
+          "video_frames_delta": 2172,
+          "audio_frames_delta": 2512,
+          "video_drops_delta": 0,
+          "audio_drops_delta": 0,
+          "video_frames_fps": 39.07182834539032
+        },
+        "receive": {
+          "video_frames_delta": 2172,
+          "audio_frames_delta": 2512,
+          "video_queue_drops_delta": 0,
+          "audio_queue_drops_delta": 0,
+          "video_frames_fps": 39.07182834539032,
+          "native_timings_last": {
+            "audio_sdi_lock_wait": {
+              "mean_ms": 0.949,
+              "p95_ms": 9.144,
+              "max_ms": 17.195,
+              "samples": 250
+            },
+            "audio_sdi_schedule": {
+              "mean_ms": 5.897,
+              "p95_ms": 15.379,
+              "max_ms": 29.193,
+              "samples": 250
+            },
+            "video_sdi_colour": {
+              "mean_ms": 4.331,
+              "p95_ms": 8.279,
+              "max_ms": 18.165,
+              "samples": 250
+            },
+            "video_sdi_lock_wait": {
+              "mean_ms": 0.33,
+              "p95_ms": 2.661,
+              "max_ms": 6.626,
+              "samples": 250
+            },
+            "video_sdi_allocate": {
+              "mean_ms": 0.809,
+              "p95_ms": 2.987,
+              "max_ms": 9.582,
+              "samples": 250
+            },
+            "video_sdi_copy": {
+              "mean_ms": 2.199,
+              "p95_ms": 7.944,
+              "max_ms": 11.342,
+              "samples": 250
+            },
+            "video_sdi_driver_schedule": {
+              "mean_ms": 2.338,
+              "p95_ms": 8.716,
+              "max_ms": 13.247,
+              "samples": 250
+            },
+            "video_sdi_schedule": {
+              "mean_ms": 11.335,
+              "p95_ms": 21.229,
+              "max_ms": 30.57,
+              "samples": 250
+            }
+          },
+          "decoder_last": {
+            "codec": "h264",
+            "backend": "d3d11va",
+            "hardware": true,
+            "frames": 2536,
+            "fallback_reason": "",
+            "timings": {
+              "decode_including_gpu_download": {
+                "mean_ms": 10.441,
+                "p95_ms": 14.471,
+                "max_ms": 19.318,
+                "samples": 250
+              }
+            }
+          },
+          "output_timings_last": {
+            "audio_worker_dispatch": {
+              "mean_ms": 1.309,
+              "p95_ms": 5.232,
+              "max_ms": 12.493,
+              "samples": 250
+            },
+            "audio_worker_processing": {
+              "mean_ms": 6.048,
+              "p95_ms": 15.419,
+              "max_ms": 29.232,
+              "samples": 250
+            },
+            "audio_event_loop_resume": {
+              "mean_ms": 4.038,
+              "p95_ms": 9.885,
+              "max_ms": 18.317,
+              "samples": 250
+            },
+            "audio_output_including_thread_wait": {
+              "mean_ms": 11.411,
+              "p95_ms": 20.476,
+              "max_ms": 45.138,
+              "samples": 250
+            },
+            "video_worker_dispatch": {
+              "mean_ms": 0.956,
+              "p95_ms": 3.679,
+              "max_ms": 5.544,
+              "samples": 250
+            },
+            "video_worker_processing": {
+              "mean_ms": 12.071,
+              "p95_ms": 22.081,
+              "max_ms": 31.136,
+              "samples": 250
+            },
+            "video_event_loop_resume": {
+              "mean_ms": 5.476,
+              "p95_ms": 13.791,
+              "max_ms": 18.288,
+              "samples": 250
+            },
+            "video_output_including_thread_wait": {
+              "mean_ms": 18.53,
+              "p95_ms": 28.702,
+              "max_ms": 39.959,
+              "samples": 250
+            }
+          },
+          "sdi_delta": {
+            "completed": 676,
+            "late": 1430,
+            "dropped": 66,
+            "flushed": 0
+          },
+          "sdi_completed_fps": 12.160476962009142,
+          "sdi_queue_delta": {
+            "video_drops": 0,
+            "audio_drops": 0
+          },
+          "sdi_lead_ms_last": -16.8
+        }
+      },
+      "evidence": [
+        "work/102-1080-controlled/declared-cadence-duplex-summary.json",
+        "work/102-1080-controlled/shared-cadence-deployment.json",
+        "work/102-1080-controlled/shared-cadence-duplex.json",
+        "work/102-1080-controlled/shared-cadence-duplex-summary.json",
+        "work/102-1080-controlled/shared-cadence-revert.json"
+      ],
+      "deployment_state": "Reverted successfully on .102 by request 9ee0d4421a674b5c8841de89b6a97baf. Owned-copy profiled isolated_encoder restored (466209ad7dded7ac2ccc08114891af49484c07ef72af8a028875c395c67498b2). Original publisher active; declared source cadence fix remains active.",
+      "prior_experiment_ids": [
+        "bridge-1080-shared-nv12",
+        "bridge-1080-declared-source-cadence",
+        "bridge-1080-direct-encode-future"
+      ],
+      "baseline_hashes": {
+        "fastvideo/publisher.py": "a628d5a4ba1e6ffc74413f8dce5f96c00707a1f97972f66d0efdbe28167bc66a",
+        "fastvideo/isolated_encoder.py": "466209ad7dded7ac2ccc08114891af49484c07ef72af8a028875c395c67498b2"
+      },
+      "candidate_hashes": {
+        "fastvideo/publisher.py": "60dd68a4de71da4b180ae4ab940b4c2abd627f89a7e7484ee32e9887e8580975",
+        "fastvideo/isolated_encoder.py": "991764690cb98930f39d64ae9c975953431cd32f1f362605ddcf23ee146002f6"
+      }
+    },
+    {
+      "id": "bridge-1080-nvenc-worker-timer",
+      "date": "2026-10-12",
+      "product": "bridge",
+      "hypothesis": "NVENC native encode repeatedly takes approximately 16 ms; a default Windows timer interval could inflate a synchronous driver wait. Test a 1-ms timer request limited to the isolated NVENC worker.",
+      "change": "Optional timeBeginPeriod(1) paired with timeEndPeriod(1) for the private NVENC worker lifetime. Owned pixels, bitrate, preset, codec, queues, frame timestamps and publisher unchanged.",
+      "decision": "inconclusive",
+      "reason": "No decisive driver-wait reduction: native mean 15.584 ms, p95 17.42 ms at end; sender p95 22.7-36.58 ms, only 41.06 fps. Not validated as a stability improvement. Test host scheduling separately, removing worker timer.",
+      "workload": {
+        "machine": ".102",
+        "format": "SDI 1080p50 -> H264 NVENC -> local WHIP receive -> SDI",
+        "gpu": "Quadro RTX 4000"
+      },
+      "metrics": {
+        "elapsed_seconds": 55.55301094055176,
+        "samples": 12,
+        "status": {
+          "input_frame_count_delta": 2750,
+          "video_encode_count_delta": 2281,
+          "audio_encode_count_delta": 2689,
+          "audio_missing_samples_delta": 0,
+          "audio_buffer_drops_delta": 0,
+          "input_frame_count_fps": 49.502267355820244,
+          "video_encode_count_fps": 41.05988066859126,
+          "encode_p95_ms_range": [
+            22.7,
+            36.58
+          ],
+          "pipeline_timings_last": {
+            "receive_wait_and_copy": {
+              "mean_ms": 2.576,
+              "p95_ms": 8.493,
+              "max_ms": 13.029,
+              "samples": 250
+            },
+            "audio_prepare": {
+              "mean_ms": 2.895,
+              "p95_ms": 9.541,
+              "max_ms": 17.632,
+              "samples": 250
+            },
+            "release_lateness": {
+              "mean_ms": 2.675,
+              "p95_ms": 9.605,
+              "max_ms": 20.703,
+              "samples": 250
+            },
+            "video_colour_convert_shared": {
+              "mean_ms": 8.951,
+              "p95_ms": 13.794,
+              "max_ms": 16.295,
+              "samples": 250
+            },
+            "video_frame_copy": {
+              "mean_ms": 12.645,
+              "p95_ms": 17.409,
+              "max_ms": 22.053,
+              "samples": 250
+            }
+          }
+        },
+        "whip": {
+          "video_frames_delta": 2281,
+          "audio_frames_delta": 2689,
+          "video_drops_delta": 0,
+          "audio_drops_delta": 0,
+          "video_frames_fps": 41.05988066859126
+        },
+        "receive": {
+          "video_frames_delta": 2281,
+          "audio_frames_delta": 2688,
+          "video_queue_drops_delta": 0,
+          "audio_queue_drops_delta": 0,
+          "video_frames_fps": 41.05988066859126,
+          "native_timings_last": {
+            "audio_sdi_lock_wait": {
+              "mean_ms": 1.246,
+              "p95_ms": 10.977,
+              "max_ms": 18.421,
+              "samples": 250
+            },
+            "audio_sdi_schedule": {
+              "mean_ms": 5.42,
+              "p95_ms": 15.356,
+              "max_ms": 20.148,
+              "samples": 250
+            },
+            "video_sdi_colour": {
+              "mean_ms": 3.668,
+              "p95_ms": 6.159,
+              "max_ms": 12.818,
+              "samples": 250
+            },
+            "video_sdi_lock_wait": {
+              "mean_ms": 0.393,
+              "p95_ms": 2.703,
+              "max_ms": 14.556,
+              "samples": 250
+            },
+            "video_sdi_allocate": {
+              "mean_ms": 0.557,
+              "p95_ms": 1.911,
+              "max_ms": 11.477,
+              "samples": 250
+            },
+            "video_sdi_copy": {
+              "mean_ms": 1.929,
+              "p95_ms": 8.065,
+              "max_ms": 12.229,
+              "samples": 250
+            },
+            "video_sdi_driver_schedule": {
+              "mean_ms": 2.446,
+              "p95_ms": 9.193,
+              "max_ms": 15.494,
+              "samples": 250
+            },
+            "video_sdi_schedule": {
+              "mean_ms": 10.029,
+              "p95_ms": 19.202,
+              "max_ms": 24.221,
+              "samples": 250
+            }
+          },
+          "decoder_last": {
+            "codec": "h264",
+            "backend": "d3d11va",
+            "hardware": true,
+            "frames": 2617,
+            "fallback_reason": "",
+            "timings": {
+              "decode_including_gpu_download": {
+                "mean_ms": 10.045,
+                "p95_ms": 13.916,
+                "max_ms": 18.925,
+                "samples": 250
+              }
+            }
+          },
+          "output_timings_last": {
+            "audio_worker_dispatch": {
+              "mean_ms": 1.128,
+              "p95_ms": 5.265,
+              "max_ms": 12.121,
+              "samples": 250
+            },
+            "audio_worker_processing": {
+              "mean_ms": 5.533,
+              "p95_ms": 15.745,
+              "max_ms": 20.172,
+              "samples": 250
+            },
+            "audio_event_loop_resume": {
+              "mean_ms": 3.455,
+              "p95_ms": 10.896,
+              "max_ms": 15.006,
+              "samples": 250
+            },
+            "audio_output_including_thread_wait": {
+              "mean_ms": 10.13,
+              "p95_ms": 20.122,
+              "max_ms": 31.275,
+              "samples": 250
+            },
+            "video_worker_dispatch": {
+              "mean_ms": 0.736,
+              "p95_ms": 2.63,
+              "max_ms": 5.156,
+              "samples": 250
+            },
+            "video_worker_processing": {
+              "mean_ms": 10.707,
+              "p95_ms": 19.77,
+              "max_ms": 25.071,
+              "samples": 250
+            },
+            "video_event_loop_resume": {
+              "mean_ms": 5.072,
+              "p95_ms": 12.683,
+              "max_ms": 16.673,
+              "samples": 250
+            },
+            "video_output_including_thread_wait": {
+              "mean_ms": 16.529,
+              "p95_ms": 26.893,
+              "max_ms": 33.732,
+              "samples": 250
+            }
+          },
+          "sdi_delta": {
+            "completed": 2124,
+            "late": 0,
+            "dropped": 0,
+            "flushed": 0
+          },
+          "sdi_completed_fps": 38.23375122318625,
+          "sdi_queue_delta": {
+            "video_drops": 156,
+            "audio_drops": 258
+          },
+          "sdi_lead_ms_last": 85.36
+        }
+      },
+      "evidence": [
+        "work/102-1080-controlled/owned-before-timer-duplex-summary.json",
+        "tests/test_encoder_timer.py",
+        "tests/test_isolated_encoder.py",
+        "work/102-1080-controlled/worker-timer-deployment.json",
+        "work/102-1080-controlled/worker-timer-duplex.json",
+        "work/102-1080-controlled/worker-timer-duplex-summary.json"
+      ],
+      "prior_experiment_ids": [
+        "bridge-1080-shared-after-cadence-fix",
+        "bridge-1080-declared-source-cadence"
+      ],
+      "baseline_hashes": {
+        "fastvideo/isolated_encoder.py": "466209ad7dded7ac2ccc08114891af49484c07ef72af8a028875c395c67498b2"
+      },
+      "candidate_hashes": {
+        "fastvideo/isolated_encoder.py": "53e4e1418051a9684f653bf56fe7c1f6d2637c9e00c4db7c87f6dbab2d207740"
+      },
+      "deployment_state": "Worker timer removed successfully by ca9f29380b3c45679eb6a35a74c7c19e. No validated gain retained."
+    },
+    {
+      "id": "bridge-1080-nvenc-host-timer",
+      "date": "2026-10-12",
+      "product": "bridge",
+      "hypothesis": "Frame completion/event-loop resume reaches 13 ms while native encoder is in another process. Precise Windows timers may improve host scheduling; worker-only timer did not fix it.",
+      "change": "Remove worker timer. Optional paired 1-ms timer request in host only while NVENC IsolatedEncoder process is live; balance on startup failure and close. Codec quality, copies, timestamps and queues unchanged.",
+      "decision": "rejected",
+      "reason": "Host timer did not improve dispatch or actual throughput: only 35.36 encoded fps, sender p95 32.61-36.96 ms; SDI video queue drops +269, audio drops +265. Restore no-timer baseline.",
+      "workload": {
+        "machine": ".102",
+        "format": "SDI 1080p50 -> H264 NVENC -> local WHIP receive -> SDI"
+      },
+      "metrics": {
+        "elapsed_seconds": 55.71108078956604,
+        "samples": 12,
+        "status": {
+          "input_frame_count_delta": 2749,
+          "video_encode_count_delta": 1970,
+          "audio_encode_count_delta": 2489,
+          "audio_missing_samples_delta": 0,
+          "audio_buffer_drops_delta": 0,
+          "input_frame_count_fps": 49.34386411176665,
+          "video_encode_count_fps": 35.36100847587497,
+          "encode_p95_ms_range": [
+            32.61,
+            36.96
+          ],
+          "pipeline_timings_last": {
+            "receive_wait_and_copy": {
+              "mean_ms": 2.465,
+              "p95_ms": 7.87,
+              "max_ms": 15.757,
+              "samples": 250
+            },
+            "audio_prepare": {
+              "mean_ms": 3.003,
+              "p95_ms": 9.397,
+              "max_ms": 16.697,
+              "samples": 250
+            },
+            "release_lateness": {
+              "mean_ms": 2.719,
+              "p95_ms": 8.133,
+              "max_ms": 14.509,
+              "samples": 250
+            },
+            "video_colour_convert_shared": {
+              "mean_ms": 9.419,
+              "p95_ms": 14.254,
+              "max_ms": 19.546,
+              "samples": 250
+            },
+            "video_frame_copy": {
+              "mean_ms": 13.436,
+              "p95_ms": 19.078,
+              "max_ms": 24.437,
+              "samples": 250
+            }
+          }
+        },
+        "whip": {
+          "video_frames_delta": 1969,
+          "audio_frames_delta": 2489,
+          "video_drops_delta": 0,
+          "audio_drops_delta": 0,
+          "video_frames_fps": 35.343058725379606
+        },
+        "receive": {
+          "video_frames_delta": 1969,
+          "audio_frames_delta": 2489,
+          "video_queue_drops_delta": 0,
+          "audio_queue_drops_delta": 0,
+          "video_frames_fps": 35.343058725379606,
+          "native_timings_last": {
+            "audio_sdi_lock_wait": {
+              "mean_ms": 1.182,
+              "p95_ms": 9.223,
+              "max_ms": 15.017,
+              "samples": 250
+            },
+            "audio_sdi_schedule": {
+              "mean_ms": 6.535,
+              "p95_ms": 16.74,
+              "max_ms": 20.699,
+              "samples": 250
+            },
+            "video_sdi_colour": {
+              "mean_ms": 4.124,
+              "p95_ms": 7.681,
+              "max_ms": 18.953,
+              "samples": 250
+            },
+            "video_sdi_lock_wait": {
+              "mean_ms": 0.645,
+              "p95_ms": 3.879,
+              "max_ms": 17.759,
+              "samples": 250
+            },
+            "video_sdi_allocate": {
+              "mean_ms": 0.67,
+              "p95_ms": 2.578,
+              "max_ms": 12.901,
+              "samples": 250
+            },
+            "video_sdi_copy": {
+              "mean_ms": 2.084,
+              "p95_ms": 8.171,
+              "max_ms": 10.11,
+              "samples": 250
+            },
+            "video_sdi_driver_schedule": {
+              "mean_ms": 2.447,
+              "p95_ms": 9.163,
+              "max_ms": 14.621,
+              "samples": 250
+            },
+            "video_sdi_schedule": {
+              "mean_ms": 11.237,
+              "p95_ms": 21.165,
+              "max_ms": 31.236,
+              "samples": 250
+            }
+          },
+          "decoder_last": {
+            "codec": "h264",
+            "backend": "d3d11va",
+            "hardware": true,
+            "frames": 2326,
+            "fallback_reason": "",
+            "timings": {
+              "decode_including_gpu_download": {
+                "mean_ms": 10.367,
+                "p95_ms": 14.793,
+                "max_ms": 19.07,
+                "samples": 250
+              }
+            }
+          },
+          "output_timings_last": {
+            "audio_worker_dispatch": {
+              "mean_ms": 1.311,
+              "p95_ms": 6.71,
+              "max_ms": 15.003,
+              "samples": 250
+            },
+            "audio_worker_processing": {
+              "mean_ms": 6.645,
+              "p95_ms": 16.758,
+              "max_ms": 20.743,
+              "samples": 250
+            },
+            "video_worker_dispatch": {
+              "mean_ms": 0.847,
+              "p95_ms": 3.192,
+              "max_ms": 6.202,
+              "samples": 250
+            },
+            "audio_event_loop_resume": {
+              "mean_ms": 3.32,
+              "p95_ms": 8.933,
+              "max_ms": 13.935,
+              "samples": 250
+            },
+            "audio_output_including_thread_wait": {
+              "mean_ms": 11.283,
+              "p95_ms": 21.016,
+              "max_ms": 29.965,
+              "samples": 250
+            },
+            "video_worker_processing": {
+              "mean_ms": 10.844,
+              "p95_ms": 21.778,
+              "max_ms": 32.097,
+              "samples": 250
+            },
+            "video_event_loop_resume": {
+              "mean_ms": 4.743,
+              "p95_ms": 12.868,
+              "max_ms": 16.905,
+              "samples": 250
+            },
+            "video_output_including_thread_wait": {
+              "mean_ms": 16.449,
+              "p95_ms": 28.264,
+              "max_ms": 36.875,
+              "samples": 250
+            }
+          },
+          "sdi_delta": {
+            "completed": 1700,
+            "late": 0,
+            "dropped": 0,
+            "flushed": 0
+          },
+          "sdi_completed_fps": 30.51457584212561,
+          "sdi_queue_delta": {
+            "video_drops": 269,
+            "audio_drops": 265
+          },
+          "sdi_lead_ms_last": 146.42
+        }
+      },
+      "evidence": [
+        "work/102-1080-controlled/worker-timer-duplex-summary.json",
+        "tests/test_encoder_timer.py",
+        "work/102-1080-controlled/host-timer-duplex.json",
+        "work/102-1080-controlled/host-timer-duplex-summary.json",
+        "work/102-1080-controlled/host-timer-deployment.json"
+      ],
+      "prior_experiment_ids": [
+        "bridge-1080-nvenc-worker-timer"
+      ],
+      "baseline_hashes": {
+        "fastvideo/isolated_encoder.py": "53e4e1418051a9684f653bf56fe7c1f6d2637c9e00c4db7c87f6dbab2d207740"
+      },
+      "candidate_hashes": {
+        "fastvideo/isolated_encoder.py": "7984327b234f50d94fe5d7787f75d1c44573180ead06be685c078f71fd1f2637"
+      },
+      "deployment_state": "Reverted on .102 by c589c739d38d400fa3c9976537f2e304. No timer experiment remains active."
+    },
+    {
+      "id": "bridge-1080-omt-versus-sdi-input",
+      "date": "2026-10-12",
+      "product": "bridge",
+      "hypothesis": "Input-specific contention may explain SDI sender slowdown; compare an available 1080p50 OMT source with identical encoder and SDI output.",
+      "change": "Temporary selected-source and last-source change from Duo (1) to K12700 vMix Output 1. Removed timer attempts before comparison.",
+      "decision": "inconclusive",
+      "reason": "Video is substantially faster: 49.01 sent/received/hardware-completed fps with no SDI output losses. Still sender p95 21.42-26.02 ms and OMT audio missing +1031040 samples in 55.54 s. Source picture content equivalence unverified; do not attribute all differences solely to SDI API or call this lossless.",
+      "workload": {
+        "machine": ".102",
+        "format": "OMT 1080p50 -> NVENC H264 4 Mbit/s medium -> local WHIP -> SDI Duo (3)"
+      },
+      "metrics": {
+        "elapsed_seconds": 55.54358267784119,
+        "samples": 12,
+        "status": {
+          "input_frame_count_delta": 2800,
+          "video_encode_count_delta": 2722,
+          "audio_encode_count_delta": 2800,
+          "audio_missing_samples_delta": 1031040,
+          "audio_buffer_drops_delta": 0,
+          "input_frame_count_fps": 50.41086413601197,
+          "video_encode_count_fps": 49.006561492223064,
+          "encode_p95_ms_range": [
+            21.42,
+            26.02
+          ],
+          "pipeline_timings_last": {
+            "receive_wait_and_copy": {
+              "mean_ms": 8.29,
+              "p95_ms": 20.37,
+              "max_ms": 23.627,
+              "samples": 250
+            },
+            "audio_prepare": {
+              "mean_ms": 1.315,
+              "p95_ms": 3.658,
+              "max_ms": 10.274,
+              "samples": 250
+            },
+            "video_resize_and_copy": {
+              "mean_ms": 0.011,
+              "p95_ms": 0.023,
+              "max_ms": 0.028,
+              "samples": 250
+            },
+            "release_lateness": {
+              "mean_ms": 5.506,
+              "p95_ms": 11.569,
+              "max_ms": 20.617,
+              "samples": 250
+            },
+            "video_colour_convert_shared": {
+              "mean_ms": 9.85,
+              "p95_ms": 12.173,
+              "max_ms": 16.763,
+              "samples": 250
+            },
+            "video_frame_copy": {
+              "mean_ms": 12.028,
+              "p95_ms": 15.392,
+              "max_ms": 19.597,
+              "samples": 250
+            }
+          }
+        },
+        "whip": {
+          "video_frames_delta": 2722,
+          "audio_frames_delta": 2800,
+          "video_drops_delta": 0,
+          "audio_drops_delta": 0,
+          "video_frames_fps": 49.006561492223064
+        },
+        "receive": {
+          "video_frames_delta": 2722,
+          "audio_frames_delta": 2800,
+          "video_queue_drops_delta": 0,
+          "audio_queue_drops_delta": 0,
+          "video_frames_fps": 49.006561492223064,
+          "native_timings_last": {
+            "audio_sdi_lock_wait": {
+              "mean_ms": 1.048,
+              "p95_ms": 7.132,
+              "max_ms": 12.15,
+              "samples": 250
+            },
+            "audio_sdi_schedule": {
+              "mean_ms": 3.788,
+              "p95_ms": 13.411,
+              "max_ms": 16.311,
+              "samples": 250
+            },
+            "video_sdi_colour": {
+              "mean_ms": 2.698,
+              "p95_ms": 3.476,
+              "max_ms": 10.555,
+              "samples": 250
+            },
+            "video_sdi_lock_wait": {
+              "mean_ms": 0.243,
+              "p95_ms": 1.205,
+              "max_ms": 11.893,
+              "samples": 250
+            },
+            "video_sdi_allocate": {
+              "mean_ms": 0.371,
+              "p95_ms": 0.933,
+              "max_ms": 9.248,
+              "samples": 250
+            },
+            "video_sdi_copy": {
+              "mean_ms": 1.148,
+              "p95_ms": 1.861,
+              "max_ms": 10.941,
+              "samples": 250
+            },
+            "video_sdi_driver_schedule": {
+              "mean_ms": 1.321,
+              "p95_ms": 7.001,
+              "max_ms": 10.9,
+              "samples": 250
+            },
+            "video_sdi_schedule": {
+              "mean_ms": 6.222,
+              "p95_ms": 14.886,
+              "max_ms": 20.346,
+              "samples": 250
+            }
+          },
+          "decoder_last": {
+            "codec": "h264",
+            "backend": "d3d11va",
+            "hardware": true,
+            "frames": 3156,
+            "fallback_reason": "",
+            "timings": {
+              "decode_including_gpu_download": {
+                "mean_ms": 9.493,
+                "p95_ms": 12.079,
+                "max_ms": 16.057,
+                "samples": 250
+              }
+            }
+          },
+          "output_timings_last": {
+            "audio_worker_dispatch": {
+              "mean_ms": 0.43,
+              "p95_ms": 1.427,
+              "max_ms": 8.713,
+              "samples": 250
+            },
+            "audio_worker_processing": {
+              "mean_ms": 3.833,
+              "p95_ms": 13.426,
+              "max_ms": 16.329,
+              "samples": 250
+            },
+            "audio_event_loop_resume": {
+              "mean_ms": 1.514,
+              "p95_ms": 8.439,
+              "max_ms": 12.353,
+              "samples": 250
+            },
+            "audio_output_including_thread_wait": {
+              "mean_ms": 5.789,
+              "p95_ms": 15.787,
+              "max_ms": 19.441,
+              "samples": 250
+            },
+            "video_worker_dispatch": {
+              "mean_ms": 0.317,
+              "p95_ms": 0.854,
+              "max_ms": 2.417,
+              "samples": 250
+            },
+            "video_worker_processing": {
+              "mean_ms": 6.833,
+              "p95_ms": 15.552,
+              "max_ms": 20.928,
+              "samples": 250
+            },
+            "video_event_loop_resume": {
+              "mean_ms": 2.214,
+              "p95_ms": 10.29,
+              "max_ms": 14.101,
+              "samples": 250
+            },
+            "video_output_including_thread_wait": {
+              "mean_ms": 9.375,
+              "p95_ms": 19.73,
+              "max_ms": 23.587,
+              "samples": 250
+            }
+          },
+          "sdi_delta": {
+            "completed": 2722,
+            "late": 0,
+            "dropped": 0,
+            "flushed": 0
+          },
+          "sdi_completed_fps": 49.006561492223064,
+          "sdi_queue_delta": {
+            "video_drops": 0,
+            "audio_drops": 0
+          },
+          "sdi_lead_ms_last": 55.22
+        }
+      },
+      "evidence": [
+        "work/102-1080-controlled/omt1080-same-encoder-duplex.json",
+        "work/102-1080-controlled/omt1080-same-encoder-duplex-summary.json"
+      ],
+      "deployment_state": "SDI Duo (1) selection restored by de62a87c0efb4337ae826b064651ecaf; OMT comparison stopped.",
+      "prior_experiment_ids": [
+        "bridge-1080-nvenc-host-timer",
+        "bridge-1080-declared-source-cadence"
+      ]
+    },
+    {
+      "id": "bridge-1080-sdi-output-frame-pool",
+      "date": "2026-10-12",
+      "product": "bridge",
+      "hypothesis": "Per-frame native allocation, buffer query and Release calls add driver/GIL transitions. Bounded reusable SDK frames may reduce SDI output cost without changing codec or playout reserve.",
+      "change": "Maximum eight owned native frames; cache pixel pointer. Return a slot only after ScheduledFrameCompleted. Keep six-frame backpressure limit, same preroll/timestamps/copy/conversion. Separate pool lock prevents callback/Stop lock inversion.",
+      "decision": "inconclusive",
+      "reason": "Under OMT input native SDI schedule p95 fell from 14.886 to 7.868 ms, but overall output p95 still 16.919 ms; one late frame. Under SDI input 36.17 sent fps, 30 late and 2 dropped completions over 86.10 s, output native p95 20.887 ms and overall p95 29.351 ms. Safe buffer reuse does not establish stable SDI 1080p50. Revert before input isolation experiment; preserve candidate for later controlled re-evaluation.",
+      "workload": {
+        "machine": ".102",
+        "format": "OMT 1080p50 -> H264 -> SDI",
+        "other_apps": "User reports no other applications running on .102"
+      },
+      "metrics": {
+        "sdi-frame-pool-omt-duplex": {
+          "elapsed_seconds": 55.540658712387085,
+          "samples": 12,
+          "status": {
+            "input_frame_count_delta": 2751,
+            "video_encode_count_delta": 2646,
+            "audio_encode_count_delta": 2750,
+            "audio_missing_samples_delta": 1146240,
+            "audio_buffer_drops_delta": 0,
+            "input_frame_count_fps": 49.531281475177245,
+            "video_encode_count_fps": 47.64077454864376,
+            "encode_p95_ms_range": [
+              21.28,
+              26.58
+            ],
+            "pipeline_timings_last": {
+              "receive_wait_and_copy": {
+                "mean_ms": 7.793,
+                "p95_ms": 20.23,
+                "max_ms": 25.609,
+                "samples": 250
+              },
+              "audio_prepare": {
+                "mean_ms": 1.14,
+                "p95_ms": 4.88,
+                "max_ms": 10.337,
+                "samples": 250
+              },
+              "video_resize_and_copy": {
+                "mean_ms": 0.012,
+                "p95_ms": 0.021,
+                "max_ms": 0.032,
+                "samples": 250
+              },
+              "release_lateness": {
+                "mean_ms": 6.177,
+                "p95_ms": 12.981,
+                "max_ms": 21.475,
+                "samples": 250
+              },
+              "video_colour_convert_shared": {
+                "mean_ms": 8.665,
+                "p95_ms": 12.35,
+                "max_ms": 16.536,
+                "samples": 250
+              },
+              "video_frame_copy": {
+                "mean_ms": 10.91,
+                "p95_ms": 15.149,
+                "max_ms": 17.914,
+                "samples": 250
+              }
+            }
+          },
+          "whip": {
+            "video_frames_delta": 2646,
+            "audio_frames_delta": 2750,
+            "video_drops_delta": 0,
+            "audio_drops_delta": 0,
+            "video_frames_fps": 47.64077454864376
+          },
+          "receive": {
+            "video_frames_delta": 2646,
+            "audio_frames_delta": 2750,
+            "video_queue_drops_delta": 0,
+            "audio_queue_drops_delta": 0,
+            "video_frames_fps": 47.64077454864376,
+            "native_timings_last": {
+              "audio_sdi_lock_wait": {
+                "mean_ms": 0.442,
+                "p95_ms": 2.349,
+                "max_ms": 6.844,
+                "samples": 250
+              },
+              "audio_sdi_schedule": {
+                "mean_ms": 2.68,
+                "p95_ms": 9.758,
+                "max_ms": 14.945,
+                "samples": 250
+              },
+              "video_sdi_colour": {
+                "mean_ms": 2.699,
+                "p95_ms": 3.657,
+                "max_ms": 5.741,
+                "samples": 250
+              },
+              "video_sdi_lock_wait": {
+                "mean_ms": 0.079,
+                "p95_ms": 0.412,
+                "max_ms": 4.448,
+                "samples": 250
+              },
+              "video_sdi_allocate": {
+                "mean_ms": 0.011,
+                "p95_ms": 0.016,
+                "max_ms": 0.027,
+                "samples": 250
+              },
+              "video_sdi_copy": {
+                "mean_ms": 0.856,
+                "p95_ms": 1.526,
+                "max_ms": 7.476,
+                "samples": 250
+              },
+              "video_sdi_driver_schedule": {
+                "mean_ms": 0.859,
+                "p95_ms": 1.684,
+                "max_ms": 7.557,
+                "samples": 250
+              },
+              "video_sdi_schedule": {
+                "mean_ms": 4.863,
+                "p95_ms": 7.868,
+                "max_ms": 17.052,
+                "samples": 250
+              }
+            },
+            "decoder_last": {
+              "codec": "h264",
+              "backend": "d3d11va",
+              "hardware": true,
+              "frames": 3591,
+              "fallback_reason": "",
+              "timings": {
+                "decode_including_gpu_download": {
+                  "mean_ms": 8.117,
+                  "p95_ms": 10.941,
+                  "max_ms": 13.317,
+                  "samples": 250
+                }
+              }
+            },
+            "output_timings_last": {
+              "audio_worker_dispatch": {
+                "mean_ms": 0.391,
+                "p95_ms": 0.996,
+                "max_ms": 7.485,
+                "samples": 250
+              },
+              "audio_worker_processing": {
+                "mean_ms": 2.744,
+                "p95_ms": 9.81,
+                "max_ms": 14.964,
+                "samples": 250
+              },
+              "audio_event_loop_resume": {
+                "mean_ms": 1.372,
+                "p95_ms": 7.366,
+                "max_ms": 13.405,
+                "samples": 250
+              },
+              "audio_output_including_thread_wait": {
+                "mean_ms": 4.52,
+                "p95_ms": 12.96,
+                "max_ms": 18.423,
+                "samples": 250
+              },
+              "video_worker_dispatch": {
+                "mean_ms": 0.344,
+                "p95_ms": 1.088,
+                "max_ms": 2.262,
+                "samples": 250
+              },
+              "video_worker_processing": {
+                "mean_ms": 5.522,
+                "p95_ms": 9.111,
+                "max_ms": 17.6,
+                "samples": 250
+              },
+              "video_event_loop_resume": {
+                "mean_ms": 1.644,
+                "p95_ms": 8.987,
+                "max_ms": 12.647,
+                "samples": 250
+              },
+              "video_output_including_thread_wait": {
+                "mean_ms": 7.519,
+                "p95_ms": 16.919,
+                "max_ms": 22.099,
+                "samples": 250
+              }
+            },
+            "sdi_delta": {
+              "completed": 2644,
+              "late": 1,
+              "dropped": 0,
+              "flushed": 0
+            },
+            "sdi_completed_fps": 47.60476489290026,
+            "sdi_queue_delta": {
+              "video_drops": 0,
+              "audio_drops": 0
+            },
+            "sdi_lead_ms_last": 68.24
+          }
+        },
+        "sdi-frame-pool-sdi-duplex": {
+          "elapsed_seconds": 86.0977098941803,
+          "samples": 18,
+          "status": {
+            "input_frame_count_delta": 4300,
+            "video_encode_count_delta": 3114,
+            "audio_encode_count_delta": 3949,
+            "audio_missing_samples_delta": 0,
+            "audio_buffer_drops_delta": 0,
+            "input_frame_count_fps": 49.943256391894515,
+            "video_encode_count_fps": 36.168209396362684,
+            "encode_p95_ms_range": [
+              31.23,
+              36.62
+            ],
+            "pipeline_timings_last": {
+              "receive_wait_and_copy": {
+                "mean_ms": 2.599,
+                "p95_ms": 7.813,
+                "max_ms": 14.37,
+                "samples": 250
+              },
+              "audio_prepare": {
+                "mean_ms": 3.172,
+                "p95_ms": 9.291,
+                "max_ms": 16.512,
+                "samples": 250
+              },
+              "release_lateness": {
+                "mean_ms": 2.953,
+                "p95_ms": 8.228,
+                "max_ms": 17.129,
+                "samples": 250
+              },
+              "video_colour_convert_shared": {
+                "mean_ms": 9.787,
+                "p95_ms": 14.63,
+                "max_ms": 18.882,
+                "samples": 250
+              },
+              "video_frame_copy": {
+                "mean_ms": 13.483,
+                "p95_ms": 19.418,
+                "max_ms": 22.489,
+                "samples": 250
+              }
+            }
+          },
+          "whip": {
+            "video_frames_delta": 3114,
+            "audio_frames_delta": 3948,
+            "video_drops_delta": 0,
+            "audio_drops_delta": 0,
+            "video_frames_fps": 36.168209396362684
+          },
+          "receive": {
+            "video_frames_delta": 3114,
+            "audio_frames_delta": 3949,
+            "video_queue_drops_delta": 0,
+            "audio_queue_drops_delta": 0,
+            "video_frames_fps": 36.168209396362684,
+            "native_timings_last": {
+              "audio_sdi_lock_wait": {
+                "mean_ms": 1.195,
+                "p95_ms": 10.001,
+                "max_ms": 12.613,
+                "samples": 250
+              },
+              "audio_sdi_schedule": {
+                "mean_ms": 6.312,
+                "p95_ms": 15.59,
+                "max_ms": 25.2,
+                "samples": 250
+              },
+              "video_sdi_colour": {
+                "mean_ms": 4.609,
+                "p95_ms": 9.622,
+                "max_ms": 17.444,
+                "samples": 250
+              },
+              "video_sdi_lock_wait": {
+                "mean_ms": 0.654,
+                "p95_ms": 4.62,
+                "max_ms": 16.636,
+                "samples": 250
+              },
+              "video_sdi_allocate": {
+                "mean_ms": 0.013,
+                "p95_ms": 0.018,
+                "max_ms": 0.061,
+                "samples": 250
+              },
+              "video_sdi_copy": {
+                "mean_ms": 2.009,
+                "p95_ms": 7.525,
+                "max_ms": 13.446,
+                "samples": 250
+              },
+              "video_sdi_driver_schedule": {
+                "mean_ms": 2.335,
+                "p95_ms": 8.822,
+                "max_ms": 12.743,
+                "samples": 250
+              },
+              "video_sdi_schedule": {
+                "mean_ms": 10.643,
+                "p95_ms": 20.887,
+                "max_ms": 30.028,
+                "samples": 250
+              }
+            },
+            "decoder_last": {
+              "codec": "h264",
+              "backend": "d3d11va",
+              "hardware": true,
+              "frames": 3823,
+              "fallback_reason": "",
+              "timings": {
+                "decode_including_gpu_download": {
+                  "mean_ms": 10.587,
+                  "p95_ms": 15.14,
+                  "max_ms": 18.23,
+                  "samples": 250
+                }
+              }
+            },
+            "output_timings_last": {
+              "video_worker_dispatch": {
+                "mean_ms": 0.9,
+                "p95_ms": 3.494,
+                "max_ms": 5.682,
+                "samples": 250
+              },
+              "audio_worker_dispatch": {
+                "mean_ms": 1.24,
+                "p95_ms": 4.757,
+                "max_ms": 12.025,
+                "samples": 250
+              },
+              "audio_worker_processing": {
+                "mean_ms": 6.411,
+                "p95_ms": 15.627,
+                "max_ms": 25.239,
+                "samples": 250
+              },
+              "audio_event_loop_resume": {
+                "mean_ms": 4.221,
+                "p95_ms": 12.393,
+                "max_ms": 17.611,
+                "samples": 250
+              },
+              "audio_output_including_thread_wait": {
+                "mean_ms": 11.888,
+                "p95_ms": 23.12,
+                "max_ms": 29.812,
+                "samples": 250
+              },
+              "video_worker_processing": {
+                "mean_ms": 11.365,
+                "p95_ms": 21.543,
+                "max_ms": 31.09,
+                "samples": 250
+              },
+              "video_event_loop_resume": {
+                "mean_ms": 5.208,
+                "p95_ms": 12.684,
+                "max_ms": 21.55,
+                "samples": 250
+              },
+              "video_output_including_thread_wait": {
+                "mean_ms": 17.49,
+                "p95_ms": 29.351,
+                "max_ms": 36.643,
+                "samples": 250
+              }
+            },
+            "sdi_delta": {
+              "completed": 3080,
+              "late": 30,
+              "dropped": 2,
+              "flushed": 0
+            },
+            "sdi_completed_fps": 35.77330922954305,
+            "sdi_queue_delta": {
+              "video_drops": 0,
+              "audio_drops": 0
+            },
+            "sdi_lead_ms_last": 52.86
+          }
+        }
+      },
+      "evidence": [
+        "work/102-1080-controlled/sdi-frame-pool-omt-duplex-summary.json",
+        "work/102-1080-controlled/sdi-frame-pool-sdi-duplex-summary.json",
+        "work/102-1080-controlled/test_sdi_frame_pool.tried.py",
+        "work/102-1080-controlled/sdi_output.frame-pool-tried.py"
+      ],
+      "reference": "https://documents.blackmagicdesign.com/UserManuals/DeckLinkSDKManual.pdf, section 2.5.6",
+      "baseline_hashes": {
+        "fastvideo/sdi_output.py": "9d9fafde9b8f0a2b667df8bcc12102ba89423bfa78fb0bd7b4d5c5948b8f6f25"
+      },
+      "candidate_hashes": {
+        "fastvideo/sdi_output.py": "069965c50b9632a7bbaef5db8ec03deafbaf4688ff73ef3c72e670334daa93b6"
+      },
+      "deployment_state": "Baseline SDI output restored in source and on .102. Rollback response work/102-1080-controlled/sdi-frame-pool-revert.json. No installer.",
+      "prior_experiment_ids": [
+        "bridge-1080-omt-versus-sdi-input",
+        "bridge-1080-shared-after-cadence-fix"
+      ]
+    },
+    {
+      "id": "bridge-0058-encoder-rate-hold-connection-replace-session",
+      "date": "2026-11-11",
+      "product": "bridge",
+      "hypothesis": "(1) In-process NVENC/QSV H.264 assume 50 fps for every source, so 25p sends half the bitrate. (2) A source restart closes the WHIP output because the gateway resets all clients when its media input ends. (3) The receiver refuses a reconnecting sender with 409 until ICE consent expires (about 30 s).",
+      "change": "Encoder rate from frame.opaque (encoder.frame_rate); gateway keeps clients for 10 s without media and rebases pts across timeline restarts (timeRebase), WHIP session holds through gaps under 10 s, recover_source checks every 1 s; receiver replaces a session without media for 3 s on a new authenticated offer. Version 0.0.5.8.",
+      "decision": "provisional",
+      "reason": "Before: NVENC 1080p target 4 Mbit/s at 25 fps with a 50-fps context measured 2.30 Mbit/s (60 fps: 4.93). After, laptop loop (internal test source 720p25, NVENC, WHIP H.264 4 Mbit/s to own receiver, OMT out, QSV decode): sent 3.99 Mbit/s, keyframe interval 50 frames; source restart: longest picture gap at the receiver 0.89 s, same receiver session, sender attempts stayed 1, decoder resets 0; sender killed without DELETE: new session receiving 4.5 s after reconnect (first offer 409 while the old session was silent for under 3 s, the second replaced it). Python 202 tests OK (5 skipped), Go tests OK.",
+      "not_tested": "Real SDI/NDI/OMT source faults, SDI output across a held gap (lead after restart), 1080i keep, QSV encode on Intel, resolution change inside a held session, real network break between two PCs.",
+      "deployment_state": "Laptop C:/FastVideoBridge updated by file copy (backup work/update-backups/20261111-0.0.5.7), Bridge left stopped. Not committed, no installer, .102/.104/NUC unchanged."
+    },
+    {
+      "id": "bridge-0059-full-duplex-sdi-and-source-stopped",
+      "date": "2026-11-12",
+      "product": "bridge",
+      "hypothesis": "SDI input on an UltraStudio HD Mini failed with \"connector is already in use\" because decklink.select refused any busy flag, although the device is full duplex (profile attribute dupx = dxfu) and only its output was playing (vMix or the receiver).",
+      "change": "decklink.direction_busy: only the same direction blocks on a full-duplex device; discover reports input_busy/output_busy. Deliberate stop: gateway POST /input-stopped closes clients at once, WHIP status shows \"Source stopped\" without receiver warnings, H.265 output treats MediaStreamError as a stopped input. Version 0.0.5.9.",
+      "decision": "provisional",
+      "reason": "Laptop, UltraStudio HD Mini as SDI input and SDI output of the same Bridge (720p50, NVENC H.264 4 Mbit/s, QSV decode): loop playing after 2 s; input reopened while the output played: opened, longest picture gap at the receiver 1.58 s, same session, SDI lead 48.5 ms before and 48.2 ms after, late 0, dropped 1; after 10 more s no drops, no warning. Stop of the input (test source, H.265): WHIP \"waiting for source / Source stopped\", no warning on sender or receiver, receiver back to waiting within 1 s; restart reconnected in 2.6 s. Python 212 tests OK (5 skipped; test_ndi_output failed once in the full run and passed twice alone, known flaky), Go tests OK.",
+      "not_tested": "Input opened while vMix plays to the same device (busy flag 2 from another program); half-duplex devices; pulling the SDI cable; 1080i; long run.",
+      "deployment_state": "Laptop C:/FastVideoBridge updated by file copy (backup work/update-backups/20261112-0.0.5.8), Bridge running. Not committed, no installer, .102/.104/NUC unchanged."
+    },
+    {
+      "id": "bridge-0511-sdi-clock-pad-media-restart-decoder-queue",
+      "date": "2026-11-12",
+      "product": "bridge",
+      "hypothesis": "A card clock faster than the source uses up the SDI lead; nothing corrects it until the resync at -250 ms. A media process that ends by itself is never restarted. The compressed-picture queue before the decoder has no limit.",
+      "change": "sdi_output._lead_action: pad (schedule one picture later, audio pause of the same length) when 5 of 50 pictures have less than one picture of lead; trim unchanged. MediaWorker.dead + WhipReceive._revive_output. receive_media.MAX_WAITING = 100 with restart at the next keyframe. Update-Bridge.ps1 stop check via status and process. Recovery log throttled, work-folder housekeeping. Version 0.0.5.11.",
+      "decision": "provisional",
+      "reason": "Card simulator (tools/measurements/sdi_sim.py logic, drift added): card +2000 ppm for 120 s before: 4963 pictures too late, lead down to -200 ms, no correction; after: 0 too late, 11 pads, lead 17..43 ms. +100 ppm for 10 min before: 9428 too late; after: 0, 3 pads. -2000 ppm unchanged (11 trims). No drift: 0 pads, 0 trims. Existing simulator scenarios unchanged (A/V +0.0 ms). Laptop: media process killed during an OMT loop: new process, receiving again after 4.7 s, output_restarts 1. SDI in DeckLink Duo (1) 1080p60 -> WHIP H.264 -> SDI out Duo (2), 45 s: lead 45.3..46.0 ms, 0 pads, 0 trims, 0 late, 0 drops. Python 224 tests OK (5 skipped).",
+      "not_tested": "Real long run with two free-running clocks (pad on hardware, audible effect of the 20 ms audio pause); decoder overflow on real overload; Update-Bridge.ps1 end to end.",
+      "deployment_state": "Laptop C:/FastVideoBridge updated by file copy (backup work/update-backups/20261112-0.0.5.10), Bridge running, input stopped. Not committed, no installer, .102/.104/NUC unchanged."
+    },
+    {
+      "id": "bridge-0512-input-audio-selection",
+      "date": "2026-11-12",
+      "product": "bridge",
+      "hypothesis": "Feature, not a performance experiment: choose the input audio channels as in FastVideo (stereo pair or one channel as mono on both sides). Risk checked: reading eight SDI channels instead of two must not disturb capture.",
+      "change": "sources.AUDIO_SELECT / selected_channels; SDI EnableAudioInput with 8 channels (fallback 2), selection sent to the capture worker; GET/POST /api/input-audio, saved as input_audio; Settings card \"Input audio\". Version 0.0.5.12.",
+      "decision": "provisional",
+      "reason": "Laptop, DeckLink Duo (1) 1080p50: source reports 8 channels; switching through pairs 1-4 and mono 1, 2, 8 while running: no missing samples, no discontinuities, invalid selection refused, choice saved. Browser: options and notices correct, card height unchanged. The source carried no sound at that time (direct probe: silence with 2 and with 8 requested channels alike), so the routing itself was only verified by unit tests (planar NDI/OMT data and an interleaved 8-channel SDI packet). Before, on 0.0.5.11: 4 h loop 1080p50 H.265, 613918 pictures, 0 drops, lip sync confirmed by the operator. Python 232 tests OK (5 skipped).",
+      "not_tested": "Audible check with tone on single channels; NDI/OMT sources with more than two channels; a device that offers only two SDI channels.",
+      "deployment_state": "Laptop C:/FastVideoBridge on 0.0.5.12 by file copy (backup work/update-backups/20261112-0.0.5.11), Bridge running with the SDI input. 0.0.5.11 and 0.0.5.12 not committed, no installer, .102/.104/NUC unchanged."
+    }
+  ]
+}

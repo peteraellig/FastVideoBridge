@@ -1,0 +1,56 @@
+FastVideo Bridge 0.0.2.31 - WHIP receive output
+
+On Main choose OMT or Full NDI and enter an Output name.
+Stop receiver before changing output. Start receiver applies and saves the choice.
+Only one output runs at a time. Old installations and presets keep OMT by default.
+Production presets include the output choice and NDI audio attenuation.
+
+For receivers such as vMix that need a lower NDI reference level, enable
+NDI audio -20 dB. It applies immediately while receiving, without reconnecting.
+Use attenuation in Bridge OR vMix, not both. Default is off; OMT is unaffected.
+
+Both outputs accept decoded H264, H265 or AV1 video and Opus stereo audio.
+Hardware decoding stays automatic, with software fallback where needed.
+Input colour conversion runs in one bounded worker rather than the control
+event loop. Capture pixels are read without an extra BGR copy; each encoder
+still receives its own NV12 buffer. OMT audio and video use independent locks,
+so audio does not wait for video compression. Stop waits for native work.
+Follow input preserves received resolution and frame rate. The 720p setting
+changes only resolution. Audio and video retain their common sender clock.
+NDI output uses the standard Full NDI SDK, not NDI HX.
+Full NDI uses more local-network bandwidth than OMT.
+Hardware NV12 frames avoid RGB conversion. Full NDI keeps two
+packing buffers when GPU download planes are padded; asynchronous SDK access
+is synchronized before buffer reuse or shutdown. Other formats use UYVY.
+For ordinary 16:9 input, optional 720p scaling stays in YUV and shares the
+dedicated video output worker. Non-16:9 input retains aspect-fit letterboxing.
+
+For even-sized NV12 output up to 60 fps, OMT uses the bundled public VMX
+encoder API directly, retaining the SDK's High Quality profile. It reads the
+two decoded planes without a full NV12 packing copy. Where the original
+codec used fewer workers, up to four are selected according to CPU capacity.
+Compressed VMX frames then travel through the existing native OMT sender.
+Other formats, higher frame rates, or unavailable direct APIs retain standard
+SDK encoding. Audio, resolution, cadence and source timestamps stay intact.
+Diagnostics separate VMX compression time from compressed OMT send time and
+record the active encoder, warning text and session for comparisons.
+NDI retains its asynchronous NV12 path; no extra alignment copy is imposed.
+
+Input startup validates successive source timestamps over approximately
+0.75 seconds before anchoring the common audio/video clock. This is startup
+time only, not extra ongoing video latency. Stale initial pictures and audio that ends before
+that clock origin are discarded; timestamps are never synthesized. During
+recovery the input remains enabled and stoppable. Set source also switches a
+failed/recovering input; a pending retry cannot reopen a previously stopped
+or replaced input. Set source flashes Source set (green) or Error (red).
+
+Install NDI Runtime / Tools (optional installer task) for NDI output.
+The source appears as COMPUTERNAME (Output name) in Studio Monitor or vMix.
+In Help apply Receiver or Both firewall rules after selecting Full NDI.
+Extra NDI rules apply only to Bridge Python, LocalSubnet, Private/Domain profiles.
+Confirm the displayed rules. No extra router forwarding is needed for local NDI.
+
+Technical references:
+https://docs.ndi.video/all/developing-with-ndi/sdk/ndi-send
+https://docs.ndi.video/all/developing-with-ndi/sdk/frame-types
+https://docs.ndi.video/all/developing-with-ndi/sdk/port-numbers

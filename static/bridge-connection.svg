@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1060 290" role="img" aria-labelledby="connection-title connection-desc">
+<title id="connection-title">WHIP: open the receiving port on the receiving computer</title>
+<desc id="connection-desc">The sender connects across the Internet to the receiver router. Forward the receiver's configured port for TCP and UDP to the receiver's local IP, using the same internal port. Allow this port in the receiver's Windows Firewall. The sender normally needs no router forwarding.</desc>
+<defs><marker id="bridge-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#65ddc6"/></marker></defs>
+<g font-family="Segoe UI,Arial,sans-serif" fill="#e2f2fb">
+<rect x="10" y="48" width="250" height="182" rx="18" fill="#193a32" stroke="#4d9d88"/>
+<text x="32" y="81" font-size="21" font-weight="700">Bridge sender</text>
+<text x="32" y="109" font-size="15" fill="#a9c9c0">OMT / NDI / SDI input</text>
+<text x="32" y="143" font-size="16">Enter receiver WHIP URL</text>
+<text x="32" y="168" font-size="16">and matching stream key</text>
+<text x="32" y="205" font-size="15" fill="#73ead0">Usually no router forwarding</text>
+<path d="M264 138H375" fill="none" stroke="#65ddc6" stroke-width="3" marker-end="url(#bridge-arrow)"/>
+<text x="319" y="110" text-anchor="middle" font-size="15" fill="#a8d4e8">Internet</text>
+<text x="319" y="166" text-anchor="middle" font-size="13" fill="#a8d4e8">TCP + UDP</text>
+<rect x="387" y="48" width="280" height="182" rx="18" fill="#393323" stroke="#c7a357"/>
+<text x="409" y="81" font-size="21" font-weight="700">Receiver router</text>
+<text x="409" y="110" font-size="15" fill="#d5c49b">Public address: <tspan data-help-public-ip="">PUBLIC-IP</tspan></text>
+<text x="409" y="145" font-size="17" font-weight="600">Forward TCP + UDP</text>
+<text x="409" y="171" font-size="17">Port <tspan data-help-receive-port="">56208</tspan> → receiver LAN IP</text>
+<text x="409" y="204" font-size="15" fill="#f0d086">Use the same internal port</text>
+<path d="M672 138H783" fill="none" stroke="#65ddc6" stroke-width="3" marker-end="url(#bridge-arrow)"/>
+<text x="727" y="110" text-anchor="middle" font-size="15" fill="#a8d4e8">Local network</text>
+<text x="727" y="166" text-anchor="middle" font-size="13" fill="#a8d4e8">TCP + UDP</text>
+<rect x="795" y="48" width="255" height="182" rx="18" fill="#203a4b" stroke="#6b9eb8"/>
+<text x="817" y="81" font-size="21" font-weight="700">Bridge receiver</text>
+<text x="817" y="110" font-size="15" fill="#a8d4e8">LAN IP, e.g. 192.168.1.104</text>
+<text x="817" y="145" font-size="17">Settings: Receive port</text>
+<text x="817" y="171" font-size="17" font-weight="600" data-help-receive-port="">56208</text>
+<text x="817" y="204" font-size="15" fill="#73ead0">Firewall: allow TCP + UDP</text>
+<text x="530" y="262" text-anchor="middle" font-size="16" fill="#a8d4e8">Same LAN? Skip router forwarding. Windows Firewall rules are still needed.</text>
+</g></svg>

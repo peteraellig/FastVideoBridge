@@ -1,0 +1,19 @@
+{
+  "bitrate": 4000000,
+  "nvenc_preset": "p4",
+  "max_viewers": 40,
+  "http_port": 18879,
+  "gateway_port": 18880,
+  "bridge_port": 20999,
+  "public_base_url": "",
+  "stun_urls": [],
+  "public_ipv4": "",
+  "codec": "h264",
+  "encoder": "auto",
+  "qsv_preset": "veryfast",
+  "h264_fallback_bitrate": 4000000,
+  "h264_fallback_qsv_preset": "medium",
+  "timestamp_marker": false,
+  "viewer_title": "FastVideo Bridge",
+  "viewer_hide_logo": false
+}

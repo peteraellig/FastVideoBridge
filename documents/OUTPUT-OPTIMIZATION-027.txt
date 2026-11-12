@@ -1,0 +1,57 @@
+FastVideo Bridge 0.0.2.27 - native YUV output
+
+The colleague's Linux deployment contains a compiled whep-gateway v1.10.10,
+FFmpeg/GStreamer native output paths and Intel VAAPI support. It does not
+include the Go source. Its exact i5 NUC receive/output performance cannot
+be established from those files. Applicable principle: keep media in native
+YUV, avoid intermediate RGB images and unnecessary worker round trips.
+
+Changes:
+- Full NDI accepts the hardware decoder's NV12 surface directly, instead of
+  converting every image to UYVY. Other formats retain the UYVY fallback.
+- Adjacent NV12 planes need no packing copy. Non-adjacent GPU download
+  planes use two reusable packing buffers. The previous submitted buffer
+  remains alive until the next asynchronous NDI call synchronizes it.
+- OMT already accepts native NV12. Its synchronous send retains its existing
+  reusable packing buffer; no unverified concurrency change was made.
+- Optional 720p scaling for 16:9 input operates directly in YUV. Scaling and
+  output share the dedicated video worker. Other aspect ratios keep the
+  original letterboxing. Resolution changes do not change source timestamps.
+
+Measurements on .104 (not a benchmark of a smaller computer):
+Native 1080p50 stereo NDI comparison, two runs per path, 400 frames per run:
+UYVY path: output-call p95 3.88/3.89 ms, process CPU 5.56/5.94 s per 8 s.
+NV12 path: output-call p95 1.15/1.18 ms, process CPU 3.94/4.25 s per 8 s.
+Mean CPU time reduction about 29%. CPU measurement includes the native SDK
+and the local receiving tap, not the entire live Bridge pipeline.
+Both paths received 399 video and 400 stereo audio frames per trial; initial
+NDI connection setup missed one picture in both cases. No later gap implied.
+Native asynchronous SDK work overlaps the frame interval: call p95 is not
+end-to-end latency and does not measure all background compression work.
+
+1080p -> 720p resize-only comparison, 120 frames per path:
+Old RGB path p95 4.19 ms / 2.63 CPU seconds; YUV path 0.56 ms / 0.41 seconds.
+Scaling now uses bilinear YUV filtering rather than the old RGB area resize.
+
+Short live OMT -> H264 WHIP -> output checks, 27 seconds per output,
+18 seconds measured after warm-up: NDI 50.03 fps, OMT 49.92 fps, zero
+additional video/audio receiver queue drops. Last output-call p95 1.40 ms
+NDI / 8.32 ms OMT. Installer preparation/compression overlapped this test;
+OMT event-loop resumption was affected by that additional load.
+Live checks count completed output submissions. Separate real native NDI/OMT
+tap tests verify pixels, stereo, sender clock and reconnect for H264/H265/AV1.
+An 80-frame native NV12 test checks alternating colours, preserved timestamps
+and a 1080p-to-720p format change to detect unsafe asynchronous buffer reuse.
+
+Hardware decoding and the 20 ms warning budget at 50 fps remain unchanged.
+No automatic CPU affinity, priority changes or lower stream quality are used.
+Reliable 1080p50 operation on an older i5/i7 still needs an actual sustained
+test there, including a connected NDI/OMT consumer and its network load.
+
+Detailed measurement files on .104:
+C:\FastVideoBridge\work\nv12-probe-027.json
+C:\FastVideoBridge\work\resize-comparison-027.json
+C:\FastVideoBridge\work\live-output-test-027.json
+
+SDK NV12 layout reference:
+https://docs.ndi.video/all/developing-with-ndi/sdk/frame-types

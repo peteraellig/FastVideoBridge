@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>FastVideo · Viewer</title><link rel="stylesheet" href="/static/style.css?v=personal-notice3"><script defer src="/static/timing.js"></script><script defer src="/static/codec-selection.js?v=timestamp4"></script><script defer src="/static/viewer.js?v=0.0.5.13"></script></head>
+<body class="viewer-page"><main><header><div><h1><img id="viewerLogo" class="brand-logo" src="/static/Logo_fastvideo.png?v=logo3" alt="FastVideo" width="640" height="249"></h1><span id="viewerBrandText" class="viewer-brand-text" hidden>fastvideo.ch</span></div><div id="viewerTitle" class="viewer-header-title">FastVideo Live</div><div class="viewer-header-actions"><div class="row"><button id="connect" class="primary">Connect</button><button id="fullscreen">Fullscreen</button><button id="sound">Enable sound</button></div></div></header>
+<p id="message" class="error" role="status"></p>
+<div id="screen" class="screen"><video id="video" autoplay muted playsinline></video><button id="playbackStart" class="playback-start" type="button" hidden>Start playback</button><span id="clientId" class="client-id" hidden></span><div id="viewerClock" class="viewer-clock" hidden><span class="viewer-clock-label">Viewer clock</span><time id="viewerClockTime"></time></div></div>
+<p id="personalLinkNotice" class="personal-link-notice" role="status" hidden>Use this personal link on one device only, unless the organiser has allowed a second connection. Do not share it. If someone else connects first, they may use your connection and prevent you from joining.</p>
+<section class="viewer-diagnostics" aria-label="Playback statistics">
+<div class="viewer-metrics">
+<div class="viewer-metric viewer-connection-metric"><strong id="videoCodec">—</strong><button id="connection" class="connection-toggle signal-bad" type="button" aria-pressed="false" title="Show or hide the local viewer clock">Not connected</button></div>
+<div id="latencyMetric" class="viewer-metric" hidden><span id="latencyLabel">Latency</span><div><strong id="adjusted" title="From FastVideo input to browser display; synchronized computer clocks required">—</strong><small>ms</small></div></div>
+<div class="viewer-metric"><span>Buffer</span><div><strong id="buffer">—</strong><small>ms</small></div></div>
+<div class="viewer-metric"><span>Decoding</span><div><strong id="decode">—</strong><small>ms</small></div></div>
+<div class="viewer-metric"><span>WebRTC RTT</span><div><strong id="rtt">—</strong><small>ms</small></div></div>
+<div class="viewer-metric"><span>Received</span><div><strong id="receiveFps">—</strong><small>fps</small></div></div>
+<div class="viewer-metric"><span>Bandwidth</span><div><strong id="receiveBitrate">—</strong><small>Mbit/s</small></div></div>
+</div>
+<div class="viewer-details"><div class="viewer-info-items"><span id="audioDiagnostics">Audio/Opus</span><span id="audioStatus">Muted</span><span id="sourceKind">Source: —</span><span id="transportPath">—</span></div><div class="viewer-credit"><span id="viewerVersion">v0.0.5.13</span><span>© 2026 Peter Aellig · Live video in your browser</span></div></div>
+</section>
+</main></body></html>

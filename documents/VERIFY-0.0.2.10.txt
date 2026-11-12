@@ -1,0 +1,8 @@
+FastVideo Bridge 0.0.2.10 - 2026-10-08
+Fixed single-codec H264 source path: every isolated encoder now receives the shared NV12 frame format, independently of whether an AV1/H264 fallback publisher exists.
+Regression test instantiates a single-codec H264 Server and sends a BGR input frame through VideoTrack into the actual isolated CPU H264 worker. Passed.
+Local installed OMT source sustained about 50 fps with increasing encoded video counts, no publisher errors and zero source recoveries after restart.
+Corrected local saved target from /api/whip (404) to /api/whip-input (204) on 192.168.1.102:56208.
+WHIP connected on first attempt with increasing video and audio byte counters.
+Receiver on .102 was reachable on its fixed receive port. Its OMT output picture was not visually verified remotely.
+Installer rebuilt with source fix. Existing installation on .104 patched directly; .102 was not remotely modified.
