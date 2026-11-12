@@ -1,0 +1,232 @@
+[
+  {
+    "path": "AMF-headers-v1.5.0.tar.gz",
+    "bytes": 82755,
+    "sha256": "d569647fa26f289affe81a206259fa92f819d06db1e80cc334559953e82a3f01"
+  },
+  {
+    "path": "av-17.1.0.tar.gz",
+    "bytes": 4288546,
+    "sha256": "7f1e71ff621b66253333926f948e00faae11d855b2442133c65128bca64cdeb3"
+  },
+  {
+    "path": "dav1d-1.5.3.tar.bz2",
+    "bytes": 1217030,
+    "sha256": "e099f53253f6c247580c554d53a13f1040638f2066edc3c740e4c2f15174ce22"
+  },
+  {
+    "path": "ffmpeg-8.1.1.tar.xz",
+    "bytes": 11709440,
+    "sha256": "b6863adde98898f42602017462871b5f6333e65aec803fdd7a6308639c52edf3"
+  },
+  {
+    "path": "gcc-15.2.0.tar.xz",
+    "bytes": 101056276,
+    "sha256": "438fd996826b0c82485a29da03a72d71d6e3541a83ec702df4271f6fe025d24e"
+  },
+  {
+    "path": "lame_3.100.orig.tar.gz",
+    "bytes": 1524133,
+    "sha256": "ddfe36cab873794038ae2c1210557ad34857a4b6bdc515785d1da9e175b1da1e"
+  },
+  {
+    "path": "libiconv-1.19.tar.gz",
+    "bytes": 5921103,
+    "sha256": "88dd96a8c0464eca144fc791ae60cd31cd8ee78321e67397e25fc095c4a19aa6"
+  },
+  {
+    "path": "libpng-1.6.58.tar.xz",
+    "bytes": 1070096,
+    "sha256": "28eb403f51f0f7405249132cecfe82ea5c0ef97f1b32c5a65828814ae0d34775"
+  },
+  {
+    "path": "n13.0.19.0.tar.gz",
+    "bytes": 83385,
+    "sha256": "86d15d1a7c0ac73a0eafdfc57bebfeba7da8264595bf531cf4d8db1c22940116"
+  },
+  {
+    "path": "nasm-2.16.03.tar.xz",
+    "bytes": 1032388,
+    "sha256": "1412a1c760bbd05db026b6c0d1657affd6631cd0a63cddb6f73cc6d4aa616148"
+  },
+  {
+    "path": "opencore-amr-0.1.6.tar.gz",
+    "bytes": 939179,
+    "sha256": "483eb4061088e2b34b358e47540b5d495a96cd468e361050fae615b1809dc4a1"
+  },
+  {
+    "path": "opencv-ffmpeg/.gitignore",
+    "bytes": 27,
+    "sha256": "e89481e25fea5cb233a99ffc10e9453fd89fd094db3bf700aa6c99639486c8ac"
+  },
+  {
+    "path": "opencv-ffmpeg/.gitmodules",
+    "bytes": 71,
+    "sha256": "f367fa24031548bff1498b091cf7339fdb2f1e297adcd957410212b9663e5e70"
+  },
+  {
+    "path": "opencv-ffmpeg/build_update.sh",
+    "bytes": 2780,
+    "sha256": "16fbec0553e281295ed685d504adb820fbded41b1355a771974594638f4ae410"
+  },
+  {
+    "path": "opencv-ffmpeg/ffmpeg/archive_src.sh",
+    "bytes": 1169,
+    "sha256": "20c5a48f3447d1a8de5449fdff1f05dda6a6118f3022faa6ad14b4456790cfb6"
+  },
+  {
+    "path": "opencv-ffmpeg/ffmpeg/build_via_docker.sh",
+    "bytes": 603,
+    "sha256": "0ad8cfc8bd3b8e28120eee19654a4d0a784033869ef50f56fafd6c2ad64331c3"
+  },
+  {
+    "path": "opencv-ffmpeg/ffmpeg/build_videoio_plugin.sh",
+    "bytes": 3666,
+    "sha256": "d9d6a15cfdb90eebc3136bad76eea3eb5d26cec97bd7b04c4063ac26f8cfde02"
+  },
+  {
+    "path": "opencv-ffmpeg/ffmpeg/docker/Dockerfile",
+    "bytes": 738,
+    "sha256": "31dc0f663053c80e63967b624f9e90efb6ed1f014d66fe094544ec5c599a8242"
+  },
+  {
+    "path": "opencv-ffmpeg/ffmpeg/docker/entry.sh",
+    "bytes": 185,
+    "sha256": "34ef720bdeca44e8871cfae03deb5757429d7d3c7e603ea86dd827dae84141c4"
+  },
+  {
+    "path": "opencv-ffmpeg/ffmpeg/download_src.sh",
+    "bytes": 974,
+    "sha256": "f1edcbbb1ac3e621a5854f2c5fa13c2124988df8e9442ecae0f7af164a822b01"
+  },
+  {
+    "path": "opencv-ffmpeg/ffmpeg/dump_versions.sh",
+    "bytes": 138,
+    "sha256": "8136820a53e0322caa36363dcdfba4268252c8258058fa78555d576422514ed1"
+  },
+  {
+    "path": "opencv-ffmpeg/ffmpeg/ffmpeg_version.cmake",
+    "bytes": 286,
+    "sha256": "8e8cfc1f90cf947458cc4c4f4d4ee538667feae3807f6966d81aa6d02bac8fae"
+  },
+  {
+    "path": "opencv-ffmpeg/ffmpeg/make_mingw.sh",
+    "bytes": 5984,
+    "sha256": "ec344c47ba8d6bc72f7147b171b9b347b4e8352224cc0852eac6ef4a6d8de6d8"
+  },
+  {
+    "path": "opencv-ffmpeg/ffmpeg/mingw-toolchain-i686.cmake",
+    "bytes": 461,
+    "sha256": "f4e407e61fe818a12f88e74eac5b91a901361abc1cbfc1d20578aeef841c88f3"
+  },
+  {
+    "path": "opencv-ffmpeg/ffmpeg/mingw-toolchain-x86_64.cmake",
+    "bytes": 466,
+    "sha256": "687a0f7d6919a76305dbeb70c5216835ff562c2f8ddc8ff93bb5b93e661e8597"
+  },
+  {
+    "path": "opencv-ffmpeg/ffmpeg/opencv_ffmpeg.rc",
+    "bytes": 1089,
+    "sha256": "b7025cdf3c0da112e70b51f0a03f95971a9d030bc3b908208f39d90d3d4c68e6"
+  },
+  {
+    "path": "opencv-ffmpeg/ffmpeg/openh264_wrapper/wels/codec_api.h",
+    "bytes": 6776,
+    "sha256": "aae2da0eaf4c2ed020e8bec02e2d650d8bac4e80fa5d51905a392df4a42f1ce6"
+  },
+  {
+    "path": "opencv-ffmpeg/ffmpeg/openh264_wrapper/wels/openh264_wrapper.c",
+    "bytes": 409,
+    "sha256": "af0c1b0d4fbec2b2c582eb31f4fcda9339d91d24b09cf4141198833c0ad1330d"
+  },
+  {
+    "path": "opencv-ffmpeg/license.txt",
+    "bytes": 27393,
+    "sha256": "1f9d4168b4a9a2bdd1851023735a41d0ab09ffa5fcc1a721a99ebc1d7d35a9c5"
+  },
+  {
+    "path": "opencv-ffmpeg/readme.txt",
+    "bytes": 2467,
+    "sha256": "26e4734e7ac1e72adac7a06a747ac9a997ee3714bc2ed8b745ff27dee35a2ad9"
+  },
+  {
+    "path": "opencv-ffmpeg/sources/build/aom/aom-src-v3.14.1.tar.xz",
+    "bytes": 4422784,
+    "sha256": "f3dbb5ee8367f948ae4c90f09e8fac703dc064ab4529bf854e208633a4e9e3c7"
+  },
+  {
+    "path": "opencv-ffmpeg/sources/build/ffmpeg/ffmpeg-src-n7.1.tar.xz",
+    "bytes": 10771472,
+    "sha256": "65dcebb9ab64dea97f37bdd25a1b43dba807cb8d7c67e9a111729d836354fd8c"
+  },
+  {
+    "path": "opencv-ffmpeg/sources/build/libvpx/libvpx-src-v1.16.0.tar.xz",
+    "bytes": 4389728,
+    "sha256": "60ea79ec7a99e5e7750482c1288b3a3015b4824df45be13bb208f3bd35dde003"
+  },
+  {
+    "path": "opencv-ffmpeg/sources/build/openh264/openh264-api-headers-v2.5.0.tar.xz",
+    "bytes": 32,
+    "sha256": "0040f94d11d0039505328a90b2ff48968db873e9e7967307631bf40ef5679275"
+  },
+  {
+    "path": "opencv-ffmpeg/sources/opencv/opencv-videoio-ffmpeg.tar.xz",
+    "bytes": 37176,
+    "sha256": "8ca839350bbf7be6bf10c82f538303d59718ebf71aef32644c60132bd142f893"
+  },
+  {
+    "path": "opencv-ffmpeg/sources/opencv_ffmpeg.tar.xz",
+    "bytes": 16956,
+    "sha256": "b8ed5b293311441de369160f047f277b606452fb604f5c35a7ea1edcb3ba6539"
+  },
+  {
+    "path": "opus-1.6.1.tar.gz",
+    "bytes": 10472813,
+    "sha256": "6ffcb593207be92584df15b32466ed64bbec99109f007c82205f0194572411a1"
+  },
+  {
+    "path": "pyav-ffmpeg-b84838a.tar.gz",
+    "bytes": 20064,
+    "sha256": "9bf73ed500b28b379b8e3ffce90f7f33b71dbe56c3cda6050de79caa15807ade"
+  },
+  {
+    "path": "PyAV-v17.1.0.tar.gz",
+    "bytes": 225695,
+    "sha256": "c266687ee120220b52a685a03ce88d5f14549a051175105ec61045fe7caa7144"
+  },
+  {
+    "path": "SVT-AV1-v4.1.0.tar.bz2",
+    "bytes": 10197493,
+    "sha256": "184162d3db3a4448882b17230413b4938ca252eef6b3c5e2f1236b2fcf497881"
+  },
+  {
+    "path": "v2.16.0.tar.gz",
+    "bytes": 12968334,
+    "sha256": "d60931937426130ddad9f1975c010543f0da99e67edb1c6070656b7947f633b6"
+  },
+  {
+    "path": "vpx-1.16.0.tar.gz",
+    "bytes": 5635379,
+    "sha256": "7a479a3c66b9f5d5542a4c6a1b7d3768a983b1e5c14c60a9396edc9b649e015c"
+  },
+  {
+    "path": "webp-1.6.0.tar.gz",
+    "bytes": 3833512,
+    "sha256": "93a852c2b3efafee3723efd4636de855b46f9fe1efddd607e1f42f60fc8f2136"
+  },
+  {
+    "path": "x264-b35605ace3ddf7c1a5d67a2eb553f034aef41d55.tar.bz2",
+    "bytes": 848719,
+    "sha256": "6eeb82934e69fd51e043bd8c5b0d152839638d1ce7aa4eea65a3fedcf83ff224"
+  },
+  {
+    "path": "x265_4.2.tar.gz",
+    "bytes": 1833442,
+    "sha256": "40b1ea0453e0309f0eba934e0ddf533f8f6295966679e8894e8f1c1c8d5e1210"
+  },
+  {
+    "path": "zlib-1.3.2.tar.gz",
+    "bytes": 1502830,
+    "sha256": "bb329a0a2cd0274d05519d61c667c062e06990d72e125ee2dfa8de64f0119d16"
+  }
+]

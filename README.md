@@ -63,6 +63,8 @@ The documents directory contains only the dependency lists needed to build the a
 
 The project's own FastVideo Bridge code is licensed under the **BSD Zero Clause License (0BSD)**. See [LICENSE](LICENSE).
 
+This application uses [FFmpeg](https://ffmpeg.org/) through PyAV and OpenCV, including x264/x265 components with GPL terms. These components are not covered by the project's 0BSD license. See the [third-party notices](THIRD_PARTY_NOTICES.txt), [license texts](licenses/) and [source archive](https://github.com/peteraellig/FastVideoBridge/releases/download/v0.0.5.14/FastVideoBridge-0.0.5.14-third-party-sources.zip).
+
 Bundled third-party components retain their respective licenses. License texts can be found in `gateway/vendor`, `gateway/third_party_licenses` and `vendor/omt/LICENSE.txt`. The Windows installer includes additional license texts alongside its bundled runtime components.
 
 NDI® is a registered trademark of Vizrt NDI AB.

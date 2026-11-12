@@ -1,0 +1,60 @@
+License and source provenance audit - 2026-11-12
+
+Verified
+--------
+- Published lean installer SHA-256:
+  788a7c05185a162d574dab89457d24a67a8aa5972d0569f0be8951d7cf294353
+- Installed native libraries and copied Python package license files match
+  the installed payload manifest. Evidence is in runtime-file-evidence.json.
+- All 25 native DLLs in av.libs match the official PyPI wheel byte-for-byte:
+  av-17.1.0-cp311-abi3-win_amd64.whl
+  SHA-256: 5df5c1172ef1cf65a1529d612f7da7798ce2cf82c1ff7212466b538a6cc7214c
+- PyAV's v17.1.0 vendor configuration selects pyav-ffmpeg 8.1.1-2.
+  That build recipe is preserved at commit
+  b84838a003b1626152ef530750d5c3e0022c3db9.
+- All 15 selected native package/tool archives from that recipe were retrieved
+  and verified against its SHA-256 values (source-downloads.json).
+- The FFmpeg build recipe/patches are preserved under build-recipes/pyav-ffmpeg.
+  The patch changing FFmpeg's x264/x265 license classification is explicitly
+  retained; the DLL's LGPL label is not treated as overriding their GPL terms.
+- x264/x265 GPL-2.0-or-later copyright declarations are retained alongside
+  their COPYING texts.
+- OpenCV's opencv_videoio_ffmpeg500_64.dll MD5 is
+  a821a1135251859655090c795af05789, matching the OpenCV 5.0.0 recipe.
+  Binary commit: 06dc20cad65dc7fcf784f70c95d46750520889a7.
+  Source/build commit: 664c0098dcb47b361f20c1d6a518653c23f5f2b5.
+  Source archives and build scripts from that commit are included.
+- Original license files from 25 installed Python distributions, Python itself,
+  OpenCV and the native source packages were retained.
+
+Remaining provenance gaps / limits
+---------------------------------
+- pyav-ffmpeg's original 8.1.1-2 binary release asset was unavailable through
+  the GitHub releases API at audit time. The tagged recipe and its pinned
+  source archives remain available and have been preserved.
+- Its Windows build script copies libgcc_s_seh-1.dll, libstdc++-6.dll,
+  libwinpthread-1.dll, libiconv-2.dll and zlib1.dll from the compiler's bin
+  directory without recording exact MSYS2 package revisions in that recipe.
+  The wheel records the repaired DLLs, but not all source-package revisions.
+- Identified upstream versions: GCC strings identify 15.2.0; libiconv identifies
+  1.19; zlibVersion() returns 1.3.2. Those upstream source releases are included.
+  Exact MSYS2 revisions, patches and original build options have not been
+  established, so these upstream releases are NOT asserted to constitute
+  verified complete corresponding source for every copied runtime DLL.
+- winpthreads' upstream COPYING is from the official mingw-w64 repository:
+  https://raw.githubusercontent.com/mingw-w64/mingw-w64/master/mingw-w64-libraries/winpthreads/COPYING
+  Its specific binary's source revision remains unconfirmed.
+- No commercial redistribution exception for x264/x265 was obtained or assumed.
+- No binary rebuild, installer execution, hardware test or patent assessment
+  was performed. This is a source/license provenance audit, not a blanket
+  compliance certification. Complete binary provenance remains an open item.
+
+Source package interpretation
+-----------------------------
+The source bundle preserves original archives and patches, not a claim that
+all binaries can already be reproduced bit-for-bit. Use the upstream recipe
+and its platform/toolchain instructions. Preserve the recorded hashes when
+reconstructing a build. Original upstream test/build files inside dependency
+archives are retained because they are part of the upstream source packages.
+The application snapshot is exported from the repository commit recorded in
+APPLICATION-SOURCE-COMMIT.txt in the source bundle.

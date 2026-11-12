@@ -1,0 +1,250 @@
+[
+  {
+    "name": "aiohappyeyeballs",
+    "version": "2.7.1",
+    "license_expression": null,
+    "license_metadata": "PSF-2.0",
+    "license_files": [
+      "licenses/python-packages/aiohappyeyeballs-2.7.1.dist-info/licenses/LICENSE"
+    ]
+  },
+  {
+    "name": "aiohttp",
+    "version": "3.14.3",
+    "license_expression": null,
+    "license_metadata": "Apache-2.0 AND MIT",
+    "license_files": [
+      "licenses/python-packages/aiohttp-3.14.3.dist-info/licenses/LICENSE.txt",
+      "licenses/python-packages/aiohttp-3.14.3.dist-info/licenses/vendor/llhttp/LICENSE"
+    ]
+  },
+  {
+    "name": "aioice",
+    "version": "0.10.2",
+    "license_expression": "BSD-3-Clause",
+    "license_metadata": null,
+    "license_files": [
+      "licenses/python-packages/aioice-0.10.2.dist-info/licenses/LICENSE"
+    ]
+  },
+  {
+    "name": "aiortc",
+    "version": "1.15.0",
+    "license_expression": "BSD-3-Clause",
+    "license_metadata": null,
+    "license_files": [
+      "licenses/python-packages/aiortc-1.15.0.dist-info/licenses/LICENSE"
+    ]
+  },
+  {
+    "name": "aiosignal",
+    "version": "1.4.0",
+    "license_expression": null,
+    "license_metadata": "Apache 2.0",
+    "license_files": [
+      "licenses/python-packages/aiosignal-1.4.0.dist-info/licenses/LICENSE"
+    ]
+  },
+  {
+    "name": "attrs",
+    "version": "26.1.0",
+    "license_expression": "MIT",
+    "license_metadata": null,
+    "license_files": [
+      "licenses/python-packages/attrs-26.1.0.dist-info/licenses/LICENSE"
+    ]
+  },
+  {
+    "name": "av",
+    "version": "17.1.0",
+    "license_expression": "BSD-3-Clause",
+    "license_metadata": null,
+    "license_files": [
+      "licenses/python-packages/av-17.1.0.dist-info/licenses/AUTHORS.rst",
+      "licenses/python-packages/av-17.1.0.dist-info/licenses/LICENSE.txt"
+    ]
+  },
+  {
+    "name": "cffi",
+    "version": "2.1.1",
+    "license_expression": "MIT-0",
+    "license_metadata": null,
+    "license_files": [
+      "licenses/python-packages/cffi-2.1.1.dist-info/licenses/LICENSE"
+    ]
+  },
+  {
+    "name": "cryptography",
+    "version": "50.0.2",
+    "license_expression": "Apache-2.0 OR BSD-3-Clause",
+    "license_metadata": null,
+    "license_files": [
+      "licenses/python-packages/cryptography-50.0.2.dist-info/licenses/LICENSE",
+      "licenses/python-packages/cryptography-50.0.2.dist-info/licenses/LICENSE.APACHE",
+      "licenses/python-packages/cryptography-50.0.2.dist-info/licenses/LICENSE.BSD"
+    ]
+  },
+  {
+    "name": "dnspython",
+    "version": "2.8.0",
+    "license_expression": null,
+    "license_metadata": "ISC",
+    "license_files": [
+      "licenses/python-packages/dnspython-2.8.0.dist-info/licenses/LICENSE"
+    ]
+  },
+  {
+    "name": "frozenlist",
+    "version": "1.8.0",
+    "license_expression": null,
+    "license_metadata": "Apache-2.0",
+    "license_files": [
+      "licenses/python-packages/frozenlist-1.8.0.dist-info/licenses/LICENSE"
+    ]
+  },
+  {
+    "name": "google-crc32c",
+    "version": "1.9.0",
+    "license_expression": null,
+    "license_metadata": "Apache-2.0",
+    "license_files": [
+      "licenses/python-packages/google_crc32c-1.9.0.dist-info/licenses/LICENSE"
+    ]
+  },
+  {
+    "name": "idna",
+    "version": "3.20",
+    "license_expression": "BSD-3-Clause",
+    "license_metadata": null,
+    "license_files": [
+      "licenses/python-packages/idna-3.20.dist-info/licenses/LICENSE.md"
+    ]
+  },
+  {
+    "name": "ifaddr",
+    "version": "0.2.0",
+    "license_expression": null,
+    "license_metadata": "MIT",
+    "license_files": [
+      "licenses/python-packages/ifaddr-0.2.0.dist-info/LICENSE.txt"
+    ]
+  },
+  {
+    "name": "multidict",
+    "version": "6.9.1",
+    "license_expression": null,
+    "license_metadata": "Apache License 2.0",
+    "license_files": [
+      "licenses/python-packages/multidict-6.9.1.dist-info/licenses/LICENSE"
+    ]
+  },
+  {
+    "name": "numpy",
+    "version": "2.5.3",
+    "license_expression": "BSD-3-Clause AND 0BSD AND MIT AND Zlib AND CC0-1.0",
+    "license_metadata": null,
+    "license_files": [
+      "licenses/python-packages/numpy-2.5.3.dist-info/licenses/LICENSE.txt",
+      "licenses/python-packages/numpy-2.5.3.dist-info/licenses/numpy/ma/LICENSE",
+      "licenses/python-packages/numpy-2.5.3.dist-info/licenses/numpy/random/LICENSE.md",
+      "licenses/python-packages/numpy-2.5.3.dist-info/licenses/numpy/fft/pocketfft/LICENSE.md",
+      "licenses/python-packages/numpy-2.5.3.dist-info/licenses/numpy/linalg/lapack_lite/LICENSE.txt",
+      "licenses/python-packages/numpy-2.5.3.dist-info/licenses/numpy/random/src/distributions/LICENSE.md",
+      "licenses/python-packages/numpy-2.5.3.dist-info/licenses/numpy/random/src/mt19937/LICENSE.md",
+      "licenses/python-packages/numpy-2.5.3.dist-info/licenses/numpy/random/src/pcg64/LICENSE.md",
+      "licenses/python-packages/numpy-2.5.3.dist-info/licenses/numpy/random/src/philox/LICENSE.md",
+      "licenses/python-packages/numpy-2.5.3.dist-info/licenses/numpy/random/src/sfc64/LICENSE.md",
+      "licenses/python-packages/numpy-2.5.3.dist-info/licenses/numpy/random/src/splitmix64/LICENSE.md",
+      "licenses/python-packages/numpy-2.5.3.dist-info/licenses/numpy/_core/include/numpy/libdivide/LICENSE.txt",
+      "licenses/python-packages/numpy-2.5.3.dist-info/licenses/numpy/_core/src/highway/LICENSE",
+      "licenses/python-packages/numpy-2.5.3.dist-info/licenses/numpy/_core/src/multiarray/dragon4_LICENSE.txt",
+      "licenses/python-packages/numpy-2.5.3.dist-info/licenses/numpy/_core/src/common/pythoncapi-compat/COPYING",
+      "licenses/python-packages/numpy-2.5.3.dist-info/licenses/numpy/_core/src/npysort/x86-simd-sort/LICENSE.md",
+      "licenses/python-packages/numpy-2.5.3.dist-info/licenses/numpy/_core/src/umath/svml/LICENSE"
+    ]
+  },
+  {
+    "name": "opencv-python-headless",
+    "version": "5.0.0.93",
+    "license_expression": null,
+    "license_metadata": "Apache 2.0",
+    "license_files": [
+      "licenses/python-packages/opencv_python_headless-5.0.0.93.dist-info/LICENSE-3RD-PARTY.txt",
+      "licenses/python-packages/opencv_python_headless-5.0.0.93.dist-info/LICENSE.txt"
+    ]
+  },
+  {
+    "name": "propcache",
+    "version": "0.5.4",
+    "license_expression": null,
+    "license_metadata": "Apache-2.0",
+    "license_files": [
+      "licenses/python-packages/propcache-0.5.4.dist-info/licenses/LICENSE",
+      "licenses/python-packages/propcache-0.5.4.dist-info/licenses/NOTICE"
+    ]
+  },
+  {
+    "name": "pycparser",
+    "version": "3.0",
+    "license_expression": "BSD-3-Clause",
+    "license_metadata": null,
+    "license_files": [
+      "licenses/python-packages/pycparser-3.0.dist-info/licenses/LICENSE"
+    ]
+  },
+  {
+    "name": "pyee",
+    "version": "14.0.0",
+    "license_expression": null,
+    "license_metadata": "MIT",
+    "license_files": [
+      "licenses/python-packages/pyee-14.0.0.dist-info/licenses/LICENSE"
+    ]
+  },
+  {
+    "name": "pylibsrtp",
+    "version": "1.0.0",
+    "license_expression": "BSD-3-Clause",
+    "license_metadata": null,
+    "license_files": [
+      "licenses/python-packages/pylibsrtp-1.0.0.dist-info/licenses/LICENSE"
+    ]
+  },
+  {
+    "name": "pyOpenSSL",
+    "version": "26.4.0",
+    "license_expression": null,
+    "license_metadata": "Apache License, Version 2.0",
+    "license_files": [
+      "licenses/python-packages/pyopenssl-26.4.0.dist-info/licenses/LICENSE"
+    ]
+  },
+  {
+    "name": "sounddevice",
+    "version": "0.5.6",
+    "license_expression": "MIT",
+    "license_metadata": null,
+    "license_files": [
+      "licenses/python-packages/sounddevice-0.5.6.dist-info/licenses/LICENSE"
+    ]
+  },
+  {
+    "name": "typing_extensions",
+    "version": "4.16.0",
+    "license_expression": "PSF-2.0",
+    "license_metadata": null,
+    "license_files": [
+      "licenses/python-packages/typing_extensions-4.16.0.dist-info/licenses/LICENSE"
+    ]
+  },
+  {
+    "name": "yarl",
+    "version": "1.25.1",
+    "license_expression": null,
+    "license_metadata": "Apache-2.0",
+    "license_files": [
+      "licenses/python-packages/yarl-1.25.1.dist-info/licenses/LICENSE",
+      "licenses/python-packages/yarl-1.25.1.dist-info/licenses/NOTICE"
+    ]
+  }
+]

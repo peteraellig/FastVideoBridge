@@ -1,0 +1,390 @@
+{
+  "basis": "Installed runtime and its payload manifest; original installer SHA256 788a7c05185a162d574dab89457d24a67a8aa5972d0569f0be8951d7cf294353. No installer was rebuilt or reinstalled during this audit.",
+  "files": [
+    {
+      "path": ".runtime/LICENSE.txt",
+      "sha256": "e502c6b880ff58d614901495a9009c136539cd0b1e2a2abb8fc00b934c203419",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/aiohappyeyeballs-2.7.1.dist-info/licenses/LICENSE",
+      "sha256": "3b2f81fe21d181c499c59a256c8e1968455d6689d269aa85373bfb6af41da3bf",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/aiohttp-3.14.3.dist-info/licenses/LICENSE.txt",
+      "sha256": "ea195371abbf66a39eef56600955d1137c2c196dc144ffec46b6ea530ce70044",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/aiohttp-3.14.3.dist-info/licenses/vendor/llhttp/LICENSE",
+      "sha256": "279012e02a10acfd59a3f2d8f13a497332535d871c2b27c89988985b06a3a438",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/aioice-0.10.2.dist-info/licenses/LICENSE",
+      "sha256": "0569dfb61e866ffac17db4032d89b2e0285894e3d9b482b200aa26c0132dc284",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/aiortc-1.15.0.dist-info/licenses/LICENSE",
+      "sha256": "bec75b5a59bbf89e979e4cb764775eb7b5d0167c5e907139e6f9953698c811b6",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/aiosignal-1.4.0.dist-info/licenses/LICENSE",
+      "sha256": "6fd5243e92dd7f98ec69c7ac377728e74905709ff527a5bf98d6d0263c04f5b6",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/attrs-26.1.0.dist-info/licenses/LICENSE",
+      "sha256": "882115c95dfc2af1eeb6714f8ec6d5cbcabf667caff8729f42420da63f714e9f",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/av-17.1.0.dist-info/licenses/AUTHORS.rst",
+      "sha256": "72d1011120cc21e6c668e880c187534e84ad775b5b4485f3f3848065e474d83f",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/av-17.1.0.dist-info/licenses/LICENSE.txt",
+      "sha256": "f32ebcb6007dcc05eea369b3820e6391b0a7ef1ed763f30f1aca15dfdbacbe96",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/cffi-2.1.1.dist-info/licenses/LICENSE",
+      "sha256": "5ba24ddc57067f9249add644c3afc41a5d6dc37e23433ef759d95df370b0af63",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/cryptography-50.0.2.dist-info/licenses/LICENSE",
+      "sha256": "3e0c7c091a948b82533ba98fd7cbb40432d6f1a9acbf85f5922d2f99a93ae6bb",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/cryptography-50.0.2.dist-info/licenses/LICENSE.APACHE",
+      "sha256": "aac73b3148f6d1d7111dbca32099f68d26c644c6813ae1e4f05f6579aa2663fe",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/cryptography-50.0.2.dist-info/licenses/LICENSE.BSD",
+      "sha256": "602c4c7482de6479dd2e9793cda275e5e63d773dacd1eca689232ab7008fb4fb",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/dnspython-2.8.0.dist-info/licenses/LICENSE",
+      "sha256": "c3ea3ff5654b329c19d3bc5f7481af623c3dded4a6145585499f843ad3d741cd",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/frozenlist-1.8.0.dist-info/licenses/LICENSE",
+      "sha256": "6fd5243e92dd7f98ec69c7ac377728e74905709ff527a5bf98d6d0263c04f5b6",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/google_crc32c-1.9.0.dist-info/licenses/LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/idna-3.20.dist-info/licenses/LICENSE.md",
+      "sha256": "1a9a4f0e3d479a27240ddd59a9137a66ab4a0f9dfdc8ca6188cc0bfd85187f04",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/ifaddr-0.2.0.dist-info/LICENSE.txt",
+      "sha256": "8700856576ae2bc80c63bc970250510d9213fb02fed006d5f22742c9ddde24d7",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/multidict-6.9.1.dist-info/licenses/LICENSE",
+      "sha256": "2e4be5fc6c4c72a466fcb665d726e049a6891981fe536c4f04b6366749461d23",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/numpy-2.5.3.dist-info/licenses/LICENSE.txt",
+      "sha256": "a804dff0ead9fadc5293456410bcbfc32bf024be9c4513459663fb7b442d2341",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/numpy-2.5.3.dist-info/licenses/numpy/ma/LICENSE",
+      "sha256": "d78dbb208b80d92b4d333e41a4baae50d12444f46e53199fa7726a91de6e2da7",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/numpy-2.5.3.dist-info/licenses/numpy/random/LICENSE.md",
+      "sha256": "b4bc2f4fa1c95778f1ed3dd8f14706bece399475b978f9f34b5d3cd72521b48a",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/numpy-2.5.3.dist-info/licenses/numpy/fft/pocketfft/LICENSE.md",
+      "sha256": "8db000e158c162e7249787852d8c69764706502ccee725c06641b31c1e95c8af",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/numpy-2.5.3.dist-info/licenses/numpy/linalg/lapack_lite/LICENSE.txt",
+      "sha256": "19060ef465e1797d682ee0fc3081bd25ab1395e995e43d25c9d13c95d9a3cd6b",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/numpy-2.5.3.dist-info/licenses/numpy/random/src/distributions/LICENSE.md",
+      "sha256": "cf5619f25b112d5ce7c896efffc8e610bcb345dfadcc19f2c1460aa48fff2c9e",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/numpy-2.5.3.dist-info/licenses/numpy/random/src/mt19937/LICENSE.md",
+      "sha256": "92c10699884321f1c2947fe2a70ab23b0fbf1507f756d89dd08f38c61fc3d4fa",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/numpy-2.5.3.dist-info/licenses/numpy/random/src/pcg64/LICENSE.md",
+      "sha256": "41190663b77bee5302386495a07b7eabfbfa571aa0ae2f11da6764162062fc4f",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/numpy-2.5.3.dist-info/licenses/numpy/random/src/philox/LICENSE.md",
+      "sha256": "322ac46d870c8aeead6c53adcccc839296fb3c8e456eae155081297daf7f8013",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/numpy-2.5.3.dist-info/licenses/numpy/random/src/sfc64/LICENSE.md",
+      "sha256": "28cad82ce1379dc529df30da78ec012d7d0d1d576b03ddcb93388aee53659f59",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/numpy-2.5.3.dist-info/licenses/numpy/random/src/splitmix64/LICENSE.md",
+      "sha256": "454ec7350e478e037061850b67395753b425b1cb0a34bbc26290b020bf89d763",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/numpy-2.5.3.dist-info/licenses/numpy/_core/include/numpy/libdivide/LICENSE.txt",
+      "sha256": "d544761558b510866c21f7e8a2d5716fca76e0b98117e3b6b86314db7244d150",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/numpy-2.5.3.dist-info/licenses/numpy/_core/src/highway/LICENSE",
+      "sha256": "d208152e2777ffd0126eacc1bd21c0320d69e4e6b622d21a2a12a47e8ef73763",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/numpy-2.5.3.dist-info/licenses/numpy/_core/src/multiarray/dragon4_LICENSE.txt",
+      "sha256": "b0fd592d4ead563148e3977e7b589169d46a5ef2ff133c755a81af880a3fc919",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/numpy-2.5.3.dist-info/licenses/numpy/_core/src/common/pythoncapi-compat/COPYING",
+      "sha256": "aea41976c720f91bd19725c16916a1ace40eb1ea42620d340e587a5de4bbcea0",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/numpy-2.5.3.dist-info/licenses/numpy/_core/src/npysort/x86-simd-sort/LICENSE.md",
+      "sha256": "a732977853530066790c42817087f4829b518dd98d340c916acbfd227e39d3cb",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/numpy-2.5.3.dist-info/licenses/numpy/_core/src/umath/svml/LICENSE",
+      "sha256": "585483905b13d4b42f800c55ba99e89d6e2e33ccd5f503e201c07531d148ff41",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/opencv_python_headless-5.0.0.93.dist-info/LICENSE-3RD-PARTY.txt",
+      "sha256": "c1d60169b55cee56452b227c2fd2a7b9ddda3dd3741065f1c6201072be73fadb",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/opencv_python_headless-5.0.0.93.dist-info/LICENSE.txt",
+      "sha256": "edef0fac1eb08d29d34563f724742e078da2513e196133a12c6ad9ff01e26107",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/propcache-0.5.4.dist-info/licenses/LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/propcache-0.5.4.dist-info/licenses/NOTICE",
+      "sha256": "56d6ac6c8105c0a51304c21db060e361af9a8ea0af9a75c239c28b5d13693838",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/pycparser-3.0.dist-info/licenses/LICENSE",
+      "sha256": "0c846399369ea76ddd7b5c44fe6d16497415fcf015f5cbb508c24bf98b81c5b1",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/pyee-14.0.0.dist-info/licenses/LICENSE",
+      "sha256": "1ff556ca206b107f10e1c562ae454d3292e0296c3510eb90eb7f114caee32a66",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/pylibsrtp-1.0.0.dist-info/licenses/LICENSE",
+      "sha256": "0254bf57ba76ef94d2ec7571c7f8fb45f41c4757d9f5d9bf8929e2f3cf0bb452",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/pyopenssl-26.4.0.dist-info/licenses/LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/sounddevice-0.5.6.dist-info/licenses/LICENSE",
+      "sha256": "b6eea21bbafbaf7a2177e492f1be6b5efc6f4e708b1980773de51cdaa52f8211",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/typing_extensions-4.16.0.dist-info/licenses/LICENSE",
+      "sha256": "3b2f81fe21d181c499c59a256c8e1968455d6689d269aa85373bfb6af41da3bf",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/yarl-1.25.1.dist-info/licenses/LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/yarl-1.25.1.dist-info/licenses/NOTICE",
+      "sha256": "56d6ac6c8105c0a51304c21db060e361af9a8ea0af9a75c239c28b5d13693838",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/cv2/LICENSE-3RD-PARTY.txt",
+      "sha256": "c1d60169b55cee56452b227c2fd2a7b9ddda3dd3741065f1c6201072be73fadb",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/cv2/LICENSE.txt",
+      "sha256": "edef0fac1eb08d29d34563f724742e078da2513e196133a12c6ad9ff01e26107",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/av.libs/avcodec-62-0f4d449c1bbaaa5eeb9f8a10b4cc7e85.dll",
+      "sha256": "518e7467c753c24a0fa639eeb46291ccdc4d7d22acbc7e77ecbf83f1313b096d",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/av.libs/avdevice-62-e71ffbe296e3d34589fb064328316bfc.dll",
+      "sha256": "b428dbac01fd3ec50d2f590c0a17cfec8a7810c81e4dda8a3260bfc169e8213c",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/av.libs/avfilter-11-780a5681e7b21881ef585cd5ce000321.dll",
+      "sha256": "8544e61d4b36ef54a3116cba6548b7e229337fac06aae8cc7349c9220cebb70b",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/av.libs/avformat-62-9c2d3ee2527a13ca0fdcb82b33ed040a.dll",
+      "sha256": "c8a4ec8dddb1e076b96fafd846fcf8dc63f29cc10f73f0bfe92ce1ca9aab9724",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/av.libs/avutil-60-21bd72d722406bd9f4b24262cf4b35f3.dll",
+      "sha256": "2150d5b9b0ad85e2256fa1c2273c69d3c4563214a7a78995b1b3473ce7e041bc",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/av.libs/libdav1d-d92ea30c3d9c9934f860c34d1ba70766.dll",
+      "sha256": "d92ea30c3d9c9934f860c34d1ba7076675153fc43888c8e3f910321cd146790c",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/av.libs/libgcc_s_seh-1-eb70c1c038eb1106448e1bc7e15ae24a.dll",
+      "sha256": "74da3eafe3cbbf5e36d716361d07e865baec99291ce78cc7fd68db90fca6553d",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/av.libs/libiconv-2-52797ea4538a440d60943a017fb87a4f.dll",
+      "sha256": "52797ea4538a440d60943a017fb87a4fbdf59591c86be276fd97e696cf901ea9",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/av.libs/libmp3lame-0-7a64829d195e8823e9b581d29ebd8775.dll",
+      "sha256": "7a64829d195e8823e9b581d29ebd8775c373e5cde8c98e5371e412b911d959f7",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/av.libs/libopencore-amrnb-0-39f66c13099c652115aad3e3dbebfd3a.dll",
+      "sha256": "39f66c13099c652115aad3e3dbebfd3a21d31badf3340829784ade0962f82a89",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/av.libs/libopencore-amrwb-0-715bb0ad19b03fa41dd3753676655d28.dll",
+      "sha256": "715bb0ad19b03fa41dd3753676655d28a06511b883e190a2d04694dadf7e0b68",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/av.libs/libopus-0-b7c59d64d75a04d4907fe3036e46c927.dll",
+      "sha256": "b7c59d64d75a04d4907fe3036e46c92719c9b4cab07b00cbc855a329157bbf28",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/av.libs/libsharpyuv-25eb0c4836aeeccd9b98aeb9ee77a148.dll",
+      "sha256": "25eb0c4836aeeccd9b98aeb9ee77a148fdc794d9c32133f0abc5b26fb93b9159",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/av.libs/libstdc++-6-6cc2d0c6172bc373353f289ef20782fe.dll",
+      "sha256": "733212c5ada0c2ef3553b7f2179f97b8746574cfe08ffacbab3fdc56502ea5ac",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/av.libs/libSvtAv1Enc-5eeef79489c86980df49968253b5be77.dll",
+      "sha256": "5eeef79489c86980df49968253b5be77e73f2cff505ddd7b1fc5cb698e24bd14",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/av.libs/libvpl-7122e3918b8fda828a5af6af73ca944b.dll",
+      "sha256": "8148a99a895776680067b442f5745e34bd2e3785248691a5f0018fdc9a9f9612",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/av.libs/libvpx-1-c0f634e6ca42adeec806716d1a9e5c3e.dll",
+      "sha256": "5a6234a999ae13130ac90c8c49999c32aa25d723b5be1a56cd4487b118f78ccc",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/av.libs/libwebp-e5d4f9543eae6d381f6212f006b75bdc.dll",
+      "sha256": "6ba6cc01fa80e05a63d59aec177e77d661c9d062356bd075b710c9622a6ba6a2",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/av.libs/libwebpmux-c7c66c64054d42d6a25d9c92afeb2d3f.dll",
+      "sha256": "67477a71150062e1bcaf5606e5ff9abf9a9b28aea61ed3d3c91b57d2f571a750",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/av.libs/libwinpthread-1-26b1e143f68b103d25cd0ba0a146f5b4.dll",
+      "sha256": "26b1e143f68b103d25cd0ba0a146f5b468c1f1e7b698c9d41a5c9470b2931844",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/av.libs/libx264-165-71900781b680e0e06a1b966b46fee000.dll",
+      "sha256": "71900781b680e0e06a1b966b46fee000ee1d0e98b62be0ef204ad0275cd3580d",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/av.libs/libx265-7e74dd5103fd9dad5114dffeefd474ce.dll",
+      "sha256": "d69544b269575ee2afbe34f5974da151d4d229bcce299213ccca5bb61b3b9915",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/av.libs/swresample-6-2f06f0ee7dafc4af6aa424f40df61d57.dll",
+      "sha256": "ca7131b587661baf6283c5918ee2ae5da14bf219f0eb09d5eed164680487a4c7",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/av.libs/swscale-9-23c45a0fb3712fe0e8e3dafd8d2fd7d1.dll",
+      "sha256": "410f2f89ee59e474e7a5f6c96b95824f68a2faca9b1108c77060db20d0aa85cb",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/av.libs/zlib1-df406c365e4a532adb993bd06f95ca24.dll",
+      "sha256": "df406c365e4a532adb993bd06f95ca24a340f72ef1b1a2b59d758f5c0def57fc",
+      "manifest_match": true
+    },
+    {
+      "path": ".runtime/Lib/site-packages/cv2/opencv_videoio_ffmpeg500_64.dll",
+      "sha256": "7aabff029d1fa47cf56ede4dbbe05dc62da3208f07cd16471d4c966a33f9aa31",
+      "manifest_match": true
+    }
+  ]
+}

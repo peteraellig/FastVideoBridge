@@ -1,0 +1,174 @@
+[
+  {
+    "name": "nv-codec-headers",
+    "source_url": "https://github.com/FFmpeg/nv-codec-headers/archive/refs/tags/n13.0.19.0.tar.gz",
+    "sha256": "86d15d1a7c0ac73a0eafdfc57bebfeba7da8264595bf531cf4d8db1c22940116",
+    "file": "n13.0.19.0.tar.gz",
+    "download_url": "https://github.com/FFmpeg/nv-codec-headers/archive/refs/tags/n13.0.19.0.tar.gz",
+    "download_sha256": "86d15d1a7c0ac73a0eafdfc57bebfeba7da8264595bf531cf4d8db1c22940116",
+    "bytes": 83385,
+    "status": "verified"
+  },
+  {
+    "name": "amf-headers",
+    "source_url": "https://github.com/GPUOpen-LibrariesAndSDKs/AMF/releases/download/v1.5.0/AMF-headers-v1.5.0.tar.gz",
+    "sha256": "d569647fa26f289affe81a206259fa92f819d06db1e80cc334559953e82a3f01",
+    "file": "AMF-headers-v1.5.0.tar.gz",
+    "download_url": "https://github.com/GPUOpen-LibrariesAndSDKs/AMF/releases/download/v1.5.0/AMF-headers-v1.5.0.tar.gz",
+    "download_sha256": "d569647fa26f289affe81a206259fa92f819d06db1e80cc334559953e82a3f01",
+    "bytes": 82755,
+    "status": "verified"
+  },
+  {
+    "name": "libvpl",
+    "source_url": "https://github.com/intel/libvpl/archive/refs/tags/v2.16.0.tar.gz",
+    "sha256": "d60931937426130ddad9f1975c010543f0da99e67edb1c6070656b7947f633b6",
+    "file": "v2.16.0.tar.gz",
+    "download_url": "https://github.com/intel/libvpl/archive/refs/tags/v2.16.0.tar.gz",
+    "download_sha256": "d60931937426130ddad9f1975c010543f0da99e67edb1c6070656b7947f633b6",
+    "bytes": 12968334,
+    "status": "verified"
+  },
+  {
+    "name": "nasm",
+    "source_url": "https://www.nasm.us/pub/nasm/releasebuilds/2.16.03/nasm-2.16.03.tar.xz",
+    "sha256": "1412a1c760bbd05db026b6c0d1657affd6631cd0a63cddb6f73cc6d4aa616148",
+    "file": "nasm-2.16.03.tar.xz",
+    "download_url": "https://www.nasm.us/pub/nasm/releasebuilds/2.16.03/nasm-2.16.03.tar.xz",
+    "download_sha256": "1412a1c760bbd05db026b6c0d1657affd6631cd0a63cddb6f73cc6d4aa616148",
+    "bytes": 1032388,
+    "status": "verified"
+  },
+  {
+    "name": "ffmpeg",
+    "source_url": "https://ffmpeg.org/releases/ffmpeg-8.1.1.tar.xz",
+    "sha256": "b6863adde98898f42602017462871b5f6333e65aec803fdd7a6308639c52edf3",
+    "file": "ffmpeg-8.1.1.tar.xz",
+    "download_url": "https://ffmpeg.org/releases/ffmpeg-8.1.1.tar.xz",
+    "download_sha256": "b6863adde98898f42602017462871b5f6333e65aec803fdd7a6308639c52edf3",
+    "bytes": 11709440,
+    "status": "verified"
+  },
+  {
+    "name": "lame",
+    "source_url": "http://deb.debian.org/debian/pool/main/l/lame/lame_3.100.orig.tar.gz",
+    "sha256": "ddfe36cab873794038ae2c1210557ad34857a4b6bdc515785d1da9e175b1da1e",
+    "file": "lame_3.100.orig.tar.gz",
+    "download_url": "https://deb.debian.org/debian/pool/main/l/lame/lame_3.100.orig.tar.gz",
+    "download_sha256": "ddfe36cab873794038ae2c1210557ad34857a4b6bdc515785d1da9e175b1da1e",
+    "bytes": 1524133,
+    "status": "verified"
+  },
+  {
+    "name": "opus",
+    "source_url": "https://ftp.osuosl.org/pub/xiph/releases/opus/opus-1.6.1.tar.gz",
+    "sha256": "6ffcb593207be92584df15b32466ed64bbec99109f007c82205f0194572411a1",
+    "file": "opus-1.6.1.tar.gz",
+    "download_url": "https://ftp.osuosl.org/pub/xiph/releases/opus/opus-1.6.1.tar.gz",
+    "download_sha256": "6ffcb593207be92584df15b32466ed64bbec99109f007c82205f0194572411a1",
+    "bytes": 10472813,
+    "status": "verified"
+  },
+  {
+    "name": "dav1d",
+    "source_url": "https://code.videolan.org/videolan/dav1d/-/archive/1.5.3/dav1d-1.5.3.tar.bz2",
+    "sha256": "e099f53253f6c247580c554d53a13f1040638f2066edc3c740e4c2f15174ce22",
+    "file": "dav1d-1.5.3.tar.bz2",
+    "download_url": "https://code.videolan.org/videolan/dav1d/-/archive/1.5.3/dav1d-1.5.3.tar.bz2",
+    "download_sha256": "e099f53253f6c247580c554d53a13f1040638f2066edc3c740e4c2f15174ce22",
+    "bytes": 1217030,
+    "status": "verified"
+  },
+  {
+    "name": "libsvtav1",
+    "source_url": "https://gitlab.com/AOMediaCodec/SVT-AV1/-/archive/v4.1.0/SVT-AV1-v4.1.0.tar.bz2",
+    "sha256": "184162d3db3a4448882b17230413b4938ca252eef6b3c5e2f1236b2fcf497881",
+    "file": "SVT-AV1-v4.1.0.tar.bz2",
+    "download_url": "https://gitlab.com/AOMediaCodec/SVT-AV1/-/archive/v4.1.0/SVT-AV1-v4.1.0.tar.bz2",
+    "download_sha256": "184162d3db3a4448882b17230413b4938ca252eef6b3c5e2f1236b2fcf497881",
+    "bytes": 10197493,
+    "status": "verified"
+  },
+  {
+    "name": "vpx",
+    "source_url": "https://github.com/webmproject/libvpx/archive/refs/tags/v1.16.0.tar.gz",
+    "sha256": "7a479a3c66b9f5d5542a4c6a1b7d3768a983b1e5c14c60a9396edc9b649e015c",
+    "source_filename": "vpx-1.16.0.tar.gz",
+    "file": "vpx-1.16.0.tar.gz",
+    "download_url": "https://github.com/webmproject/libvpx/archive/refs/tags/v1.16.0.tar.gz",
+    "download_sha256": "7a479a3c66b9f5d5542a4c6a1b7d3768a983b1e5c14c60a9396edc9b649e015c",
+    "bytes": 5635379,
+    "status": "verified"
+  },
+  {
+    "name": "png",
+    "source_url": "https://downloads.sourceforge.net/project/libpng/libpng16/1.6.58/libpng-1.6.58.tar.xz",
+    "sha256": "28eb403f51f0f7405249132cecfe82ea5c0ef97f1b32c5a65828814ae0d34775",
+    "file": "libpng-1.6.58.tar.xz",
+    "download_url": "https://downloads.sourceforge.net/project/libpng/libpng16/1.6.58/libpng-1.6.58.tar.xz",
+    "download_sha256": "28eb403f51f0f7405249132cecfe82ea5c0ef97f1b32c5a65828814ae0d34775",
+    "bytes": 1070096,
+    "status": "verified"
+  },
+  {
+    "name": "webp",
+    "source_url": "https://github.com/webmproject/libwebp/archive/refs/tags/v1.6.0.tar.gz",
+    "sha256": "93a852c2b3efafee3723efd4636de855b46f9fe1efddd607e1f42f60fc8f2136",
+    "source_filename": "webp-1.6.0.tar.gz",
+    "file": "webp-1.6.0.tar.gz",
+    "download_url": "https://github.com/webmproject/libwebp/archive/refs/tags/v1.6.0.tar.gz",
+    "download_sha256": "93a852c2b3efafee3723efd4636de855b46f9fe1efddd607e1f42f60fc8f2136",
+    "bytes": 3833512,
+    "status": "verified"
+  },
+  {
+    "name": "opencore-amr",
+    "source_url": "https://downloads.sourceforge.net/project/opencore-amr/opencore-amr/opencore-amr-0.1.6.tar.gz",
+    "sha256": "483eb4061088e2b34b358e47540b5d495a96cd468e361050fae615b1809dc4a1",
+    "file": "opencore-amr-0.1.6.tar.gz",
+    "download_url": "https://downloads.sourceforge.net/project/opencore-amr/opencore-amr/opencore-amr-0.1.6.tar.gz",
+    "download_sha256": "483eb4061088e2b34b358e47540b5d495a96cd468e361050fae615b1809dc4a1",
+    "bytes": 939179,
+    "status": "verified"
+  },
+  {
+    "name": "x264",
+    "source_url": "https://code.videolan.org/videolan/x264/-/archive/b35605ace3ddf7c1a5d67a2eb553f034aef41d55/x264-b35605ace3ddf7c1a5d67a2eb553f034aef41d55.tar.bz2",
+    "sha256": "6eeb82934e69fd51e043bd8c5b0d152839638d1ce7aa4eea65a3fedcf83ff224",
+    "file": "x264-b35605ace3ddf7c1a5d67a2eb553f034aef41d55.tar.bz2",
+    "download_url": "https://code.videolan.org/videolan/x264/-/archive/b35605ace3ddf7c1a5d67a2eb553f034aef41d55/x264-b35605ace3ddf7c1a5d67a2eb553f034aef41d55.tar.bz2",
+    "download_sha256": "6eeb82934e69fd51e043bd8c5b0d152839638d1ce7aa4eea65a3fedcf83ff224",
+    "bytes": 848719,
+    "status": "verified"
+  },
+  {
+    "name": "x265",
+    "source_url": "https://bitbucket.org/multicoreware/x265_git/downloads/x265_4.2.tar.gz",
+    "sha256": "40b1ea0453e0309f0eba934e0ddf533f8f6295966679e8894e8f1c1c8d5e1210",
+    "file": "x265_4.2.tar.gz",
+    "download_url": "https://bitbucket.org/multicoreware/x265_git/downloads/x265_4.2.tar.gz",
+    "download_sha256": "40b1ea0453e0309f0eba934e0ddf533f8f6295966679e8894e8f1c1c8d5e1210",
+    "bytes": 1833442,
+    "status": "verified"
+  },
+  {
+    "name": "pyav-build",
+    "source_url": "https://codeload.github.com/PyAV-Org/PyAV/tar.gz/refs/tags/v17.1.0",
+    "source_filename": "PyAV-v17.1.0.tar.gz",
+    "file": "PyAV-v17.1.0.tar.gz",
+    "download_url": "https://codeload.github.com/PyAV-Org/PyAV/tar.gz/refs/tags/v17.1.0",
+    "download_sha256": "c266687ee120220b52a685a03ce88d5f14549a051175105ec61045fe7caa7144",
+    "bytes": 225695,
+    "status": "downloaded"
+  },
+  {
+    "name": "ffmpeg-build",
+    "source_url": "https://codeload.github.com/PyAV-Org/pyav-ffmpeg/tar.gz/b84838a003b1626152ef530750d5c3e0022c3db9",
+    "source_filename": "pyav-ffmpeg-b84838a.tar.gz",
+    "file": "pyav-ffmpeg-b84838a.tar.gz",
+    "download_url": "https://codeload.github.com/PyAV-Org/pyav-ffmpeg/tar.gz/b84838a003b1626152ef530750d5c3e0022c3db9",
+    "download_sha256": "9bf73ed500b28b379b8e3ffce90f7f33b71dbe56c3cda6050de79caa15807ade",
+    "bytes": 20064,
+    "status": "downloaded"
+  }
+]

@@ -1,0 +1,99 @@
+FastVideo WHIP Bridge 0.0.5.14 - Third-party notices
+Audit date: 2026-11-12
+
+Scope
+-----
+The FastVideo Bridge authors' own source code remains under 0BSD (LICENSE).
+That license does not replace the licenses of bundled dependencies. This
+installer must not be described as an entirely 0BSD-licensed distribution.
+Original copyright notices, license conditions and warranty disclaimers are
+preserved in the licenses directory and in the source archives.
+
+PyAV, FFmpeg, x264 and x265
+-------------------------
+PyAV 17.1.0 source is BSD-3-Clause. The Windows PyAV wheel also bundles native
+libraries with separate licenses. Its package metadata is not a license grant
+for every native library in that wheel.
+
+FFmpeg 8.1.1: the inspected DLL reports LGPL version 3 or later and is linked
+with x264 and x265. The upstream PyAV vendor recipe patches FFmpeg's configure
+script to move x264/x265 out of its GPL library list. This patch explains the
+LGPL runtime label; it does not change the x264/x265 copyright licenses.
+
+x264, revision b35605ace3ddf7c1a5d67a2eb553f034aef41d55, and x265 4.2 are
+GPL-2.0-or-later under their open-source license grants. Their copyright
+notices and full license texts are included. No commercial license or
+commercial exception for these libraries is claimed by this project.
+Redistribution of the combined FFmpeg/PyAV application must satisfy applicable
+GPL obligations, including source availability; for the combination with
+LGPL-3.0-or-later components, use the GPL-3.0-or-later-compatible route.
+The original, permissively licensed FastVideo Bridge source remains available
+under 0BSD. That does not remove copyleft conditions on the combined binary.
+Full GPL v2/v3 and LGPL v2.1/v3 texts: licenses/native/ffmpeg/.
+
+The native source archive includes FFmpeg, x264, x265, their vendor build
+recipe and patches, and the other recipe-selected native dependencies.
+Their original copyright and license notices are retained in those sources.
+This software is based in part on the work of the Independent JPEG Group.
+No project-specific changes to FFmpeg's libavcodec/jfdctfst.c,
+libavcodec/jfdctint_template.c or libavcodec/jrevdct.c were made by FastVideo.
+
+OpenCV
+------
+OpenCV Python headless 5.0.0.93 also includes a separate FFmpeg video I/O DLL.
+OpenCV/package notices are preserved under licenses/opencv/ and
+licenses/python-packages/opencv_python_headless-5.0.0.93.dist-info/.
+Its FFmpeg component is covered by the LGPL v2.1-or-later notices supplied
+with OpenCV. The Windows DLL matches the upstream OpenCV 5.0.0 binary hash.
+The matching OpenCV FFmpeg source/build tree is included in the source archive.
+
+Other components
+----------------
+Python's license and bundled notices are in licenses/python/.
+Python package license texts and bundled notices, including those supplied
+with NumPy, cryptography, PyOpenSSL, aiortc and pylibsrtp, are preserved under
+licenses/python-packages/. See licenses/python-packages.json for the inventory.
+Additional native codec/library notices are under licenses/native/.
+GCC runtime files have GPL terms with the GCC Runtime Library Exception;
+that exception is included. libiconv has LGPL terms. zlib and winpthreads
+carry their own permissive notices, which are also included.
+
+Go dependency licenses remain in gateway/vendor and gateway/third_party_licenses.
+The local GoSRT compatibility change is described in gateway/SRT-VENDOR-PATCH.md.
+OMT's MIT license remains in vendor/omt/LICENSE.txt.
+NDI Tools and Blackmagic Desktop Video are not part of this source distribution;
+obtain those separately under their vendors' terms.
+
+Sources and notices supplied with the release
+--------------------------------------------
+https://github.com/peteraellig/FastVideoBridge/releases/tag/v0.0.5.14
+
+FastVideoBridge-0.0.5.14-third-party-sources.zip
+  Original native dependency source archives, vendor build recipes/patches,
+  OpenCV FFmpeg source/build files, and a snapshot of the application source.
+FastVideoBridge-0.0.5.14-third-party-notices.zip
+  This notice, license texts, attribution files and audit manifests.
+SHA256SUMS-third-party.txt
+  Checksums for both companion archives.
+
+Keep these notices and the applicable source materials available when
+redistributing the installer. The original installer has not been rebuilt;
+these are companion release files. Future builds from this repository copy
+LICENSE, this notice and licenses/ into the installation payload.
+
+Audit limits
+------------
+See licenses/AUDIT.txt. The available source/build materials and licenses are
+provided without claiming a fully reproducible reconstruction or complete
+legal clearance of the existing upstream binary build. Missing provenance is
+not remedied merely by copying a license text. The publication of these files
+does not grant a commercial exception or a codec patent license.
+
+Primary references
+------------------
+https://ffmpeg.org/legal.html
+https://github.com/PyAV-Org/PyAV/tree/v17.1.0
+https://github.com/PyAV-Org/pyav-ffmpeg/tree/b84838a003b1626152ef530750d5c3e0022c3db9
+https://www.videolan.org/developers/x264.html
+https://www.x265.org/
+https://github.com/opencv/opencv_3rdparty/tree/664c0098dcb47b361f20c1d6a518653c23f5f2b5

@@ -19,6 +19,10 @@ parser.add_argument('--lean',action='store_true')
 args=parser.parse_args();stage=args.stage.resolve()
 if stage.exists():raise SystemExit('Choose an empty staging directory; an existing stage is never overwritten.')
 stage.mkdir(parents=True)
+# License material is required in both regular and lean payloads.
+shutil.copy2(ROOT/'LICENSE',stage/'LICENSE')
+shutil.copy2(ROOT/'THIRD_PARTY_NOTICES.txt',stage/'THIRD_PARTY_NOTICES.txt')
+shutil.copytree(ROOT/'licenses',stage/'licenses')
 exclude=shutil.ignore_patterns('__pycache__','*.pyc','*.pyo','dev-legacy')
 for folder in ('fastvideo','static','vendor','scripts','images'):
     shutil.copytree(ROOT/folder,stage/folder,ignore=exclude)
