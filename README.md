@@ -1,10 +1,10 @@
-# FastVideo WHIP Bridge
+# FastVideo WHIP Bridge 0.5.16
 
 **Website and Bridge overview: [fastvideo.ch](https://fastvideo.ch/)**
 
 FastVideo Bridge is a standalone live-video sender and receiver for Windows. It connects OMT, NDI and Blackmagic SDI with WHIP, WHEP and SRT, controlled through a local web interface.
 
-**[Download the Windows installer (version 0.0.5.14)](https://github.com/peteraellig/FastVideoBridge/releases/download/v0.0.5.14/FastVideoBridge-Setup-0.0.5.14-lean.exe)** · [All releases](https://github.com/peteraellig/FastVideoBridge/releases)
+**[Download the Windows installer (version 0.0.5.16)](https://github.com/peteraellig/FastVideoBridge/releases/download/v0.0.5.16/FastVideoBridge-Setup-0.0.5.16-lean.exe)** · [All releases](https://github.com/peteraellig/FastVideoBridge/releases)
 
 ![FastVideo Bridge – sender and receiver with live previews](images/fastvideobridge-screenshot.png)
 
