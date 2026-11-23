@@ -14,8 +14,8 @@ if ($LASTEXITCODE -ne 0) { throw 'Payload preparation failed.' }
 $bridgeLog=Join-Path $PSScriptRoot 'build.log'
 & $CompilerPath '/Q' ('/DPayloadDir='+$bridgeStage) $(if ($Lean) { '/DLean=1' }) (Join-Path $PSScriptRoot 'FastVideoBridge.iss') *> $bridgeLog
 if ($LASTEXITCODE -ne 0) { throw "Installer build failed; see $bridgeLog" }
-$bridgeSetup=Join-Path $bridgeRoot ('dist\FastVideoBridge-Setup-0.0.5.14'+$(if ($Lean) { '-lean' })+'.exe')
-$bridgeReport=Join-Path $PSScriptRoot ('smoke-report-0.0.5.14'+$(if ($Lean) { '-lean' })+'.json')
+$bridgeSetup=Join-Path $bridgeRoot ('dist\FastVideoBridge-Setup-0.0.5.16'+$(if ($Lean) { '-lean' })+'.exe')
+$bridgeReport=Join-Path $PSScriptRoot ('smoke-report-0.0.5.16'+$(if ($Lean) { '-lean' })+'.json')
 & $PythonExe (Join-Path $PSScriptRoot 'verify_installer.py') --setup $bridgeSetup --report $bridgeReport
 if ($LASTEXITCODE -ne 0) { throw "Built installer failed installed-runtime verification; see $bridgeReport" }
 $bridgeHash=(Get-FileHash -LiteralPath $bridgeSetup -Algorithm SHA256).Hash

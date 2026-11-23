@@ -109,6 +109,9 @@ def encoded_frame(bundle, codec):
     return unpack_av1(payloads),any(payload[0]&8 for payload in payloads)
 
 
+NVENC_PRESETS = {'veryfast': 'p2', 'medium': 'p4', 'slow': 'p5', 'veryslow': 'p6'}
+
+
 def native_context(codec, bitrate, fps, width, height, keyframe=1, cbr=False, preset='medium',backend='qsv'):
     name='hevc' if codec=='h265' else codec
     c=av.CodecContext.create(name+'_qsv' if backend=='qsv' else name+'_nvenc' if backend=='nvenc' else 'libx265' if codec=='h265' else 'libx264','w')
@@ -118,7 +121,9 @@ def native_context(codec, bitrate, fps, width, height, keyframe=1, cbr=False, pr
     c.options={'preset':preset,'async_depth':'1','low_delay_brc':'0'}
     if codec=='h264': c.options.update(profile='high',look_ahead='0',forced_idr='1')
     if codec=='av1': c.options['look_ahead']='0'
-    if backend=='nvenc':c.options={'preset':{'medium':'p4','slow':'p5','veryslow':'p6'}[preset],'tune':'ull','rc':'cbr' if cbr else 'vbr','zerolatency':'1','rc-lookahead':'0','forced-idr':'1'}
+    # The presets are the Quick Sync names from the UI; 'veryfast' (added for Intel) was missing here,
+    # so NVIDIA + H.265 + veryfast stopped with KeyError. Unknown names use the default p4.
+    if backend=='nvenc':c.options={'preset':NVENC_PRESETS.get(preset,'p4'),'tune':'ull','rc':'cbr' if cbr else 'vbr','zerolatency':'1','rc-lookahead':'0','forced-idr':'1'}
     elif backend=='cpu':c.options={'preset':'veryfast','tune':'zerolatency'}
     if cbr:c.options.update(maxrate=str(bitrate),minrate=str(bitrate),bufsize=str(bitrate))
     return c
@@ -133,6 +138,13 @@ class SrtOutput:
         self.config = None
         self.connection = None
         self.warning_until=0;self.warning_text=""
+        # The hardware encoder outlives connection attempts: starting one costs about 0.5 s (2 s
+        # cold) and used to happen on every retry. Replaced only on a settings change, an encoder
+        # error or a stopped input; closed on stop().
+        self.encoder = None
+        self.encoder_key = None
+        self.encoder_failed = False
+        self.failures = 0
 
     def snapshot(self):
         audio_bitrate=self.config.get('audio_bitrate',256000) if self.config else 256000
@@ -149,6 +161,7 @@ class SrtOutput:
         await self.stop()
         self.config = config
         self.attempts = self.video_frames = self.audio_frames = self.drops = 0
+        self.failures = 0
         self.state, self.detail = 'connecting', ''
         self.task = asyncio.create_task(self._run())
 
@@ -157,8 +170,36 @@ class SrtOutput:
             self.task.cancel()
             self.close_connection()
             await asyncio.gather(self.task, return_exceptions=True)
+        await self._drop_encoder()
         self.task = self.config = None
         self.state, self.detail = 'stopped', ''
+
+    async def _drop_encoder(self):
+        encoder, self.encoder, self.encoder_key = self.encoder, None, None
+        self.encoder_failed = False
+        if encoder is not None:
+            await asyncio.to_thread(encoder.close)
+
+    async def _ready_encoder(self, publisher):
+        """The running encoder if it still matches the settings, else a new, warmed one."""
+        engine = self.server.engine
+        backend = __import__('fastvideo.encoder', fromlist=['snapshot']).snapshot()['encoder_backend']
+        key = tuple(self.config[k] for k in ('codec', 'bitrate', 'preset', 'keyframe', 'cbr')) + (backend,)
+        if self.encoder is not None and self.encoder_key == key and not self.encoder_failed:
+            return self.encoder
+        await self._drop_encoder()
+        from .isolated_encoder import IsolatedEncoder
+        native = IsolatedEncoder(self.config['codec'], engine.fps, self.config['bitrate'], self.config['preset'], raw=True,
+                                 keyframe=self.config['keyframe'], cbr=self.config['cbr'], backend=backend)
+        frame = av.VideoFrame(engine.width, engine.height, 'nv12')
+        for plane in frame.planes: plane.update(bytes(plane.buffer_size))
+        frame.pts, frame.time_base = -round(90000 / engine.fps), Fraction(1, 90000)
+        try: await publisher._encode(native.encode, frame, True)
+        except BaseException:
+            await asyncio.to_thread(native.close)
+            raise
+        self.encoder, self.encoder_key = native, key
+        return native
 
     def close_connection(self):
         if self.connection:
@@ -166,11 +207,17 @@ class SrtOutput:
             except OSError: pass
             self.connection.close()
 
+    # Pause before the next attempt: short after a session that was sending (a brief network drop),
+    # growing to 3 s while the receiver does not answer, so never more attempts than before.
+    RETRY_DELAYS = (.5, 1, 2, 3)
+
     async def _run(self):
         while True:
             if not self.server.engine.snapshot()['running']:
                 self.state, self.detail = 'waiting', 'Waiting for input'
+                await self._drop_encoder()  # no input: free the hardware encoder session
                 await asyncio.sleep(.5); continue
+            sent_before = self.video_frames
             try:
                 self.attempts += 1
                 await self._session()
@@ -180,22 +227,19 @@ class SrtOutput:
                 self.connection = None
                 # Native exceptions can include the destination/password. Never expose them.
                 self.state, self.detail = 'retrying', 'SRT output interrupted. Check receiver, network and encryption settings.'
-            await asyncio.sleep(3)
+            if self.encoder_failed:
+                await self._drop_encoder()
+            if self.video_frames > sent_before:
+                self.failures = 0
+            await asyncio.sleep(self.RETRY_DELAYS[min(self.failures, len(self.RETRY_DELAYS)-1)])
+            self.failures += 1
 
     async def _session(self):
         publisher = self.server.publisher
         signature=(self.server.engine.width,self.server.engine.height,self.server.engine.fps)
         codec_name,bitrate=self.config['codec'],self.config['bitrate']
         video=None
-        from .isolated_encoder import IsolatedEncoder
-        native=IsolatedEncoder(codec_name,self.server.engine.fps,bitrate,self.config['preset'],raw=True,keyframe=self.config['keyframe'],cbr=self.config['cbr'],backend=__import__('fastvideo.encoder',fromlist=['snapshot']).snapshot()['encoder_backend'])
-        frame=av.VideoFrame(self.server.engine.width,self.server.engine.height,'nv12')
-        for plane in frame.planes:plane.update(bytes(plane.buffer_size))
-        frame.pts,frame.time_base=-round(90000/self.server.engine.fps),Fraction(1,90000)
-        try:await publisher._encode(native.encode,frame,True)
-        except BaseException:
-            await asyncio.to_thread(native.close)
-            raise
+        native=await self._ready_encoder(publisher)
         events = queue.Queue(maxsize=32)
         overflow, finished = threading.Event(), threading.Event()
         result = []
@@ -215,9 +259,9 @@ class SrtOutput:
         try:
             connection = await asyncio.shield(connecting)
         except BaseException:
+            # Receiver not reachable: the encoder stays for the next attempt.
             self.close_connection()
             await asyncio.gather(connecting, return_exceptions=True)
-            await asyncio.to_thread(native.close)
             raise
         self.state, self.detail = 'connected', 'SRT caller connected · pure Go'
 
@@ -283,8 +327,12 @@ class SrtOutput:
                     frame=await track.recv()
                     if (frame.width,frame.height,frame.opaque)!=signature:
                         return
-                    packets=await publisher._encode(context.encode,frame,first)
-                    first=False
+                    try:packets=await publisher._encode(context.encode,frame,first)
+                    except Exception:
+                        # A failed encoder is never reused (its worker process has ended).
+                        self.encoder_failed=True
+                        raise
+                    first=False  # every new connection starts with a keyframe
                     for raw,key,pts in packets:
                         last_video[0]=time.monotonic()
                         enqueue('raw',(raw,key),pts)
@@ -310,5 +358,4 @@ class SrtOutput:
             finished.set()
             self.close_connection()
             await asyncio.to_thread(worker.join, 3)
-            await asyncio.to_thread(native.close)
             self.connection = None

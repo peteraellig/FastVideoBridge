@@ -23,6 +23,11 @@ log = logging.getLogger(__name__)
 cv2.setNumThreads(1)
 
 
+def colour_space(height):
+    """YUV matrix for a picture of this height, the rule OMT and the receiver outputs use."""
+    return 'ITU709' if height >= 720 else 'ITU601'
+
+
 class Engine:
     """Receive once, keep only the latest processed frame (no growing queue)."""
     def __init__(self, sources, fps=25, width=1280, height=720, timestamp_marker=False):
@@ -97,7 +102,11 @@ class Engine:
                 else:
                     input_frame=(av.VideoFrame.from_numpy_buffer(image,format='bgr24')
                                  if image.flags.c_contiguous else av.VideoFrame.from_ndarray(image,format='bgr24'))
-                    converted=self.frame_reformatter.reformat(input_frame,format='nv12',threads=self.colour_threads)
+                    # BGR only from the test picture, NDI with alpha or letterboxing: HD in BT.709, as
+                    # the receiver declares it (swscale's default would be BT.601: red too bright).
+                    space=colour_space(input_frame.height)
+                    converted=self.frame_reformatter.reformat(input_frame,format='nv12',threads=self.colour_threads,
+                                                              src_colorspace=space,dst_colorspace=space)
                 self.timings.add('video_colour_convert_shared',started)
                 cached=(sequence,converted);self.video_frame_cache=cached
             # Encoders may change pict_type/PTS and pixels independently.
@@ -124,7 +133,10 @@ class Engine:
         if same_aspect:return image,False
         scale=min(self.width/image.width,self.height/image.height)
         w=max(2,int(image.width*scale));h=max(2,int(image.height*scale))
-        resized=self.frame_reformatter.reformat(image,width=w,height=h,format='bgr24',threads=self.colour_threads).to_ndarray()
+        # Read the YUV source with its own matrix; the BGR result goes back to YUV with the output's.
+        resized=self.frame_reformatter.reformat(image,width=w,height=h,format='bgr24',threads=self.colour_threads,
+                                                src_colorspace=colour_space(image.height),
+                                                dst_colorspace=colour_space(image.height)).to_ndarray()
         output=np.zeros((self.height,self.width,3),np.uint8)
         x,y=(self.width-w)//2,(self.height-h)//2;output[y:y+h,x:x+w]=resized
         if self.timestamp_marker:stamp(output,capture_ms)

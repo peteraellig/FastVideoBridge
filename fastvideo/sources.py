@@ -120,6 +120,47 @@ def bind(dll, name, args, result):
     return f
 
 
+def uyvy_rows(data, width, height, stride):
+    """The SDK's UYVY picture as rows of width*2 bytes, a view (no copy) that is valid only until
+    the SDK buffer is freed. NDI/OMT decode to 4:2:2 YUV anyway, so UYVY costs the SDK nothing."""
+    if not data or not (2 <= width <= 8192 and 1 <= height <= 8192) or width % 2:
+        raise ValueError("Ungültige Bildgröße oder leerer Bildpuffer")
+    if stride < width * 2 or stride > width * 8:
+        raise ValueError(f"Nicht unterstützte Zeilenbreite: {stride}")
+    raw = np.ctypeslib.as_array((C.c_uint8 * (stride * height)).from_address(data))
+    return raw.reshape(height, stride)[:, :width * 2]
+
+
+def uyvy_target(height, row):
+    """New uyvy422 VideoFrame and its pixel rows as a writable NumPy view."""
+    import av
+    frame = av.VideoFrame(row // 2, height, 'uyvy422')
+    plane = frame.planes[0]
+    return frame, np.frombuffer(plane, np.uint8).reshape(height, plane.line_size)[:, :row]
+
+
+def owned_uyvy(rows):
+    """Owned uyvy422 VideoFrame (the same native picture type as SDI): the engine converts it to
+    NV12 in one step with no colour matrix. NumPy copies with the GIL released (PyAV's
+    plane.update holds it for the whole picture)."""
+    frame, target = uyvy_target(*rows.shape)
+    np.copyto(target, rows)
+    return frame
+
+
+def uyvy_field_frame(rows, parity):
+    """One field of woven UYVY rows as an owned full-height frame (bob, as SDI)."""
+    from .sdi_input import field_picture
+    frame, target = uyvy_target(*rows.shape)
+    field_picture(rows, parity, out=target)
+    return frame
+
+
+def owned_picture(image):
+    """UYVY rows (a view of the SDK buffer) become an owned frame; BGR pictures are owned already."""
+    return owned_uyvy(image) if image.ndim == 2 else image
+
+
 def copy_bgra(data, width, height, stride):
     if not data or not (1 <= width <= 8192 and 1 <= height <= 8192):
         raise ValueError("Ungültige Bildgröße oder leerer Bildpuffer")
@@ -182,11 +223,16 @@ class FieldPacer:
         return event
 
     def split(self, image, arrival_ms, source_time, fps, arrived=None):
+        """image: BGR picture (3 dimensions) or UYVY rows (2 dimensions, may be a view of the SDK
+        buffer: both fields are copied into owned frames here)."""
         from .sdi_input import field_picture
         rate = Fraction(fps)
         half_ms, half_ticks = round(500 / rate), round(5_000_000 / rate)
         rows = image[:image.shape[0] // 2 * 2]
-        first, second = field_picture(rows, 0), field_picture(rows, 1)  # top field first, as broadcast 1080i50
+        if rows.ndim == 2:
+            first, second = uyvy_field_frame(rows, 0), uyvy_field_frame(rows, 1)
+        else:
+            first, second = field_picture(rows, 0), field_picture(rows, 1)  # top field first, as broadcast 1080i50
         self.pending = ((time.perf_counter() if arrived is None else arrived) + half_ms / 1000,
                         MediaEvent("video", second, arrival_ms + half_ms, source_time + half_ticks, fps=rate * 2, scan='i'))
         return MediaEvent("video", first, arrival_ms, source_time, fps=rate * 2, scan='i')
@@ -231,9 +277,10 @@ class NDI:
                     for i in range(count.value)]
 
     def receiver(self, source):
-        # color_format=0 requests BGRX/BGRA; bandwidth=100 is highest.
+        # color_format=1 (UYVY_BGRA): UYVY, BGRA only for sources with alpha. NDI decodes to
+        # 4:2:2 YUV, so UYVY needs no conversion in the SDK. bandwidth=100 is highest.
         config = NDIRecvSettings(NDISource(source["name"].encode(), source["address"].encode()),
-                                 0, 100, True, b"FastVideo Bridge")
+                                 1, 100, True, b"FastVideo Bridge")
         handle = self.recv_create(C.byref(config))
         if not handle:
             raise RuntimeError("NDI-Empfänger konnte nicht starten")
@@ -272,20 +319,24 @@ class NDIReceiver:
             return None
         try:
             fourcc = frame.fourcc.to_bytes(4, "little")
-            if fourcc not in (b"BGRA", b"BGRX"):
+            if fourcc == b"UYVY":
+                image = uyvy_rows(frame.data, frame.width, frame.height, frame.stride)
+            elif fourcc in (b"BGRA", b"BGRX"):
+                # Only sources with an alpha channel still arrive as BGRA (colour format UYVY_BGRA).
+                image = copy_bgra(frame.data, frame.width, frame.height, frame.stride)
+            else:
                 raise RuntimeError(f"Unerwartetes NDI-Pixelformat: {fourcc!r}")
-            image = copy_bgra(frame.data, frame.width, frame.height, frame.stride)
             fps = Fraction(frame.fps_n,frame.fps_d) if frame.fps_d else 0
             # NDI frame_format: 1 progressive, 0 interleaved (both fields in one picture).
             if frame.frame_format == 0 and fps and KEEP_INTERLACED:
-                return MediaEvent("video", image, arrival_ms, frame.timecode, fps=fps, scan='woven')
+                return MediaEvent("video", owned_picture(image), arrival_ms, frame.timecode, fps=fps, scan='woven')
             if frame.frame_format == 0 and fps:
                 return self.fields.split(image, arrival_ms, frame.timecode, fps, received)
             if frame.frame_format in (2, 3) and fps:
                 # Single fields (field 0 / field 1 from some senders): each becomes a full picture.
                 rate = fps * 2 if fps <= 30 else fps
-                return MediaEvent("video", field_to_picture(image, frame.frame_format - 2), arrival_ms, frame.timecode, fps=rate, scan='i')
-            return MediaEvent("video", image, arrival_ms, frame.timecode, fps=fps)
+                return MediaEvent("video", owned_picture(field_to_picture(image, frame.frame_format - 2)), arrival_ms, frame.timecode, fps=rate, scan='i')
+            return MediaEvent("video", owned_picture(image), arrival_ms, frame.timecode, fps=fps)
         finally:
             self.lib.free_video(self.handle, C.byref(frame))
 
@@ -325,8 +376,9 @@ class OMT:
                      "address": addresses[i].decode("utf-8", "replace")} for i in range(count.value)]
 
     def receiver(self, source):
-        # Video and program audio from the same connection, BGRA output.
-        handle = self.create(source["address"].encode(), 6, 2, 0)
+        # Video and program audio from the same connection, UYVY output (OMTPreferredVideoFormat_UYVY:
+        # VMX decodes to 4:2:2 YUV, BGRA would cost the SDK an extra conversion per picture).
+        handle = self.create(source["address"].encode(), 6, 0, 0)
         if not handle:
             raise RuntimeError("OMT-Empfänger konnte nicht starten")
         return OMTReceiver(self, handle)
@@ -365,20 +417,24 @@ class OMTReceiver:
             self.timings.add("audio_copy", sdk_returned)
             return MediaEvent("audio", audio,
                               arrival_ms, frame.timestamp, frame.sample_rate)
-        if frame.type != 2 or fourcc not in (b"BGRA", b"BGRX"):
+        if frame.type != 2 or fourcc not in (b"UYVY", b"BGRA", b"BGRX"):
             raise RuntimeError(f"Unerwartetes OMT-Pixelformat: {fourcc!r}")
         if frame.data_length < frame.stride * frame.height:
             raise RuntimeError("OMT-Bildpuffer ist zu klein")
-        image = copy_bgra(frame.data, frame.width, frame.height, frame.stride)
-        self.timings.add("video_copy_bgra_bgr", sdk_returned)
         fps = Fraction(frame.fps_n,frame.fps_d) if frame.fps_d else 0
-        if frame.flags & OMT_INTERLACED and fps and KEEP_INTERLACED:
-            return MediaEvent("video", image, arrival_ms, frame.timestamp, fps=fps, scan='woven')
-        if frame.flags & OMT_INTERLACED and fps:
+        if fourcc == b"UYVY":
+            image = uyvy_rows(frame.data, frame.width, frame.height, frame.stride)
+        else:
+            image = copy_bgra(frame.data, frame.width, frame.height, frame.stride)
+        if frame.flags & OMT_INTERLACED and fps and not KEEP_INTERLACED:
             started = time.perf_counter()
             event = self.fields.split(image, arrival_ms, frame.timestamp, fps, sdk_returned)
             self.timings.add("video_deinterlace", started)
             return event
+        image = owned_picture(image)
+        self.timings.add("video_copy", sdk_returned)
+        if frame.flags & OMT_INTERLACED and fps:
+            return MediaEvent("video", image, arrival_ms, frame.timestamp, fps=fps, scan='woven')
         return MediaEvent("video", image, arrival_ms, frame.timestamp, fps=fps)
 
     def close(self):
