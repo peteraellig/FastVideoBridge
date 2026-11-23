@@ -1,0 +1,4 @@
+0.0.5.16: 
+Der SRT-Encoder bleibt über Verbindungsversuche bestehen. Nach einer Trennung ist das Bild nach 0.78 s statt 3.8 s wieder da.  
+NDI und OMT, UYVY wird direkt in NV12 gewandelt, mit richtigen Farben und weniger Rechenzeit. Ausserdem läuft H.265 mit «veryfast» auf NVIDIA.
+Im internen LAN kommt nun eine end-to-end WHIP OMT Verbindung auf knapp 100ms mit 4mbits. wobei die OMT Umwandlung bis und vom En/DeCoder zusammen nur ca. 1ms dauert
