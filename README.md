@@ -22,7 +22,7 @@ FastVideo Bridge is a standalone live-video sender and receiver for Windows. It 
 
 ## Installation
 
-1. Download and run the [Windows installer](https://github.com/peteraellig/FastVideoBridge/releases/download/v0.0.5.14/FastVideoBridge-Setup-0.0.5.14-lean.exe).
+1. Download and run the [Windows installer](https://github.com/peteraellig/FastVideoBridge/releases/download/v0.0.5.16/FastVideoBridge-Setup-0.0.5.16-lean.exe).
 2. Launch FastVideo Bridge using the shortcut created by the installer.
 3. The control interface opens at [http://127.0.0.1:18879/sender](http://127.0.0.1:18879/sender).
 4. Configure your source, destination or receiver and start streaming. Use the **Stop FastVideo Bridge** shortcut to shut down the application.
@@ -31,7 +31,7 @@ Windows x64 is required. The installer includes Python, the Go media gateway and
 
 For incoming WHIP traffic, configure the selected receiving port and router port forwarding if needed. See the Bridge's built-in help for details. WHEP reception uses an outgoing connection.
 
-A [SHA-256 checksum](https://github.com/peteraellig/FastVideoBridge/releases/download/v0.0.5.14/FastVideoBridge-Setup-0.0.5.14-lean.exe.sha256) is included with the release. The prebuilt installer is provided as a release asset and is not included in the Git source archive.
+A [SHA-256 checksum](https://github.com/peteraellig/FastVideoBridge/releases/download/v0.0.5.16/FastVideoBridge-Setup-0.0.5.16-lean.exe.sha256) is included with the release. The prebuilt installer is provided as a release asset and is not included in the Git source archive.
 
 ## Build from source
 
